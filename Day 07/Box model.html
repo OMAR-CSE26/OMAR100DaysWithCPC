@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Box Model Demo — Day 6</title>
+  <style>
+    :root{
+      --bg: #f6f8fa;
+      --content: #ffffff;
+      --padding: #fde68a;   /* yellow */
+      --border: #93c5fd;    /* blue */
+      --margin: #d1fae5;    /* green */
+      --label-bg: rgba(0,0,0,0.7);
+      --label-color: #fff;
+      --demo-width: 300px;
+    }
+
+    body{
+      font-family: Inter, Arial, sans-serif;
+      background: var(--bg);
+      margin: 24px;
+      color: #111827;
+      line-height: 1.45;
+    }
+
+    h1{font-size: 24px; margin-bottom: 4px;}
+    p.lead{margin-top:0; color:#374151;}
+
+    .page {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 20px;
+      align-items: start;
+      margin-top:16px;
+    }
+
+    /* Demo area */
+    .demo {
+      background: #fff;
+      padding: 18px;
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+    }
+
+    .box-legend {font-weight:600; margin-bottom:8px;}
+    .note {font-size:13px; color:#475569;}
+
+    /* Visual playground (centered column) */
+    .playground {
+      display:flex;
+      justify-content:center;
+      padding: 18px 0 30px 0;
+    }
+
+    /* Outer container to show margin */
+    .outer {
+      background: var(--margin);
+      padding: 20px;    /* to separate margin area from page content */
+      width: fit-content;
+    }
+
+    /* The actual box that demonstrates content/padding/border */
+    .box {
+      /* content area color */
+      background: var(--content);
+      width: var(--demo-width);   /* content width for content-box example */
+      min-height: 120px;
+      border-radius: 6px;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      position: relative;
+    }
+
+    /* label for parts */
+    .label {
+      position: absolute;
+      top: -12px;
+      left: 10px;
+      font-size: 12px;
+      padding: 4px 8px;
+      background: var(--label-bg);
+      color: var(--label-color);
+      border-radius: 4px;
+    }
+
+    /* Show padding area by giving the box padding and overlay */
+    .padding-example .box {
+      padding: 20px;               /* padding around content */
+      background-image: linear-gradient(0deg, var(--padding), var(--padding));
+    }
+
+    /* Show border */
+    .border-example .box {
+      border: 8px solid var(--border);
+    }
+
+    /* Show margin by adding margin to the box */
+    .margin-example .box {
+      margin: 30px; /* outer space outside border */
+    }
+
+    /* combine */
+    .combined .box {
+      padding: 18px;
+      border: 6px solid var(--border);
+      margin: 24px;
+      background: linear-gradient(#fff, #fff); /* content stays white */
+    }
+
+    /* content label inside */
+    .content {
+      background: var(--content);
+      padding: 6px 10px;
+      border-radius: 4px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.03);
+    }
+
+    /* small info box on the right */
+    .info {
+      background: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.04);
+      font-size:14px;
+    }
+    .info h3{margin:0 0 8px 0; font-size:16px;}
+    .info ul {margin:0; padding-left:18px; color:#334155;}
+    .example-row {
+      display:flex;
+      gap:12px;
+      margin-bottom:18px;
+      align-items:center;
+    }
+
+    /* Compare box-sizing */
+    .compare {
+      display:flex;
+      gap:16px;
+      align-items:flex-start;
+      margin-top:12px;
+      flex-wrap:wrap;
+    }
+
+    .compare .card {
+      width: 220px;
+      padding:12px;
+      background:#fff;
+      border-radius:8px;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.04);
+      text-align:center;
+    }
+
+    pre {background:#0f172a; color:#e6eef8; padding:12px; border-radius:6px; overflow:auto; font-size:13px;}
+    code {font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;}
+    @media (max-width:900px){
+      .page {grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Box Model — Margins, Padding, Borders</h1>
+  <p class="lead">Visual examples of how <strong>content</strong>, <strong>padding</strong>, <strong>border</strong>, and <strong>margin</strong> work. Save as <code>box-model.html</code> and open in your browser.</p>
+
+  <div class="page">
+    <div class="demo">
+      <div class="box-legend">Live examples</div>
+
+      <!-- Padding example -->
+      <div class="example-row">
+        <div class="playground
