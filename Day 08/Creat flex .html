@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> Flexbox Basics</title>
+  <style>
+
+    body 
+    {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    h1 
+    {
+      text-align: center;
+      color: darkblue;
+    }
+
+   
+    .flex-container 
+    {
+      display: flex;              
+      justify-content: space-around; 
+      align-items: center;        
+      background-color: #e0f7fa;
+      padding: 20px;
+      border: 2px solid #00796b;
+      height: 200px;
+    }
+
+  
+    .flex-item 
+    {
+      background-color: #ffcc80;
+      border: 2px solid #fb8c00;
+      padding: 20px;
+      font-size: 18px;
+      text-align: center;
+      width: 100px;
+    }
+
+  
+    .flex-center 
+    {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+      background: #ede7f6;
+      height: 150px;
+      border: 2px dashed #673ab7;
+    }
+
+    .flex-center div
+     {
+      background: #b39ddb;
+      padding: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Flexbox Basics</h1>
+
+  <div class="flex-container">
+    <div class="flex-item">Omar</div>
+    <div class="flex-item">Munna</div>
+    <div class="flex-item">Fuad</div>
+  </div>
+
+  <div class="flex-center">
+    <div>Centered Box</div>
+  </div>
+
+</body>
+</html>
