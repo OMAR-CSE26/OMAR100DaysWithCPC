@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Intro to JavaScript </title>
+  <style>
+    :root{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#2563eb;
+      --success:#16a34a;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:#0f1724;
+      padding:24px;
+    }
+
+    h1{font-size:22px;margin-bottom:6px}
+    p.lead{color:var(--muted);margin-top:0;margin-bottom:16px}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+
+    .card{
+      background:var(--card);
+      padding:14px;
+      border-radius:10px;
+      box-shadow:0 8px 24px rgba(15,23,42,0.06);
+      min-height:120px;
+    }
+
+    pre {
+      background:#0b1220;
+      color:#e6eef8;
+      padding:10px;
+      border-radius:6px;
+      overflow:auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+      font-size:13px;
+      margin:10px 0 0 0;
+    }
+
+    .output {
+      background:#f8fafc;
+      border:1px dashed rgba(15,23,42,0.06);
+      padding:10px;
+      border-radius:6px;
+      font-family: ui-monospace, monospace;
+      font-size:14px;
+      min-height:36px;
+    }
+
+    button {
+      background:var(--accent);
+      color:white;
+      border:0;
+      padding:8px 12px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:600;
+      margin-top:8px;
+    }
+    button.secondary {
+      background:transparent;
+      color:var(--accent);
+      border:1px solid rgba(37,99,235,0.18);
+    }
+
+    .row {display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    label {font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+  </style>
+</head>
+<body>
+  <h1>Intro to JavaScript — Variables & Data Types</h1>
+  <p class="lead">Examples of <strong>var, let, const</strong> and common JS data types: <em>number, string, boolean, null, undefined, object, array, symbol, bigint</em>.</p>
+
+  <div class="grid">
+   
+    <div class="card">
+      <h3>Variables: <code>var</code>, <code>let</code>, <code>const</code></h3>
+      <p style="color:var(--muted)">Click to run examples and see behavior.</p>
+      <div class="row">
+        <button id="btn-vars">Run variable examples</button>
+        <button class="secondary" id="btn-clear-logs">Clear output</button>
+      </div>
+      <div class="output" id="out-vars" aria-live="polite"></div>
+
+      <pre><code>// var (function-scoped), let (block), const (constant)
+var a = 5;
+let b = 10;
+const c = 15;
+// b = 20; // allowed
+// c = 20; // error (can't reassign const)
+</code></pre>
+    </div>
+
+   
+    <div class="card">
+      <h3>Primitive Data Types</h3>
+      <p style="color:var(--muted)">Numbers, Strings, Booleans, null, undefined, symbol, bigint</p>
+
+      <div class="row">
+        <button id="btn-primitives">Show primitives</button>
+      </div>
+
+      <div id="out-primitives" class="output"></div>
+
+      <pre><code>// Examples
+let n = 42;              // number
+let s = "Hello";         // string
+let flag = true;         // boolean
+let empty = null;        // null
+let notSet;              // undefined
+let sym = Symbol('id');  // symbol
+let big = 12345678901234567890n; // bigint
+</code></pre>
+    </div>
+
+   
+    <div class="card">
+      <h3>Objects & Arrays</h3>
+      <p style="color:var(--muted)">Compound data types (mutable).</p>
+
+      <div class="row">
+        <button id="btn-objects">Show object & array</button>
+      </div>
+
+      <div id="out-objects" class="output"></div>
+
+      <pre><code>// Object
+const person = { name: "Omar", age: 21 };
+// Array
+let arr = [1, "two", true, {x:10}];
+</code></pre>
+    </div>
+
+   
+    <div class="card">
+      <h3><code>typeof</code> & Type Conversion</h3>
+      <p style="color:var(--muted)">Detect type and convert values.</p>
+
+      <div class="row">
+        <label for="convInput">Enter "123" or "abc"</label>
+        <input id="convInput" type="text" placeholder="Type something" style="padding:8px;border-radius:6px;border:1px solid #ddd">
+        <button id="btn-convert">Convert & typeof</button>
+      </div>
+
+      <div id="out-convert" class="output"></div>
+
+      <pre><code>// parseInt, Number, String, Boolean
+parseInt("123") -> 123
+Number("12.5") -> 12.5
+String(123) -> "123"
+Boolean(0) -> false
+</code></pre>
+    </div>
+
+  
+    <div class="card" style="grid-column: 1 / -1">
+      <h3>Playground — change values</h3>
+      <div class="row" style="margin-bottom:8px;">
+        <label for="playName">Name:</label>
+        <input id="playName" type="text" value="Omar" style="padding:8px;border-radius:6px;border:1px solid #ddd">
+        <label for="playAge">Age:</label>
+        <input id="playAge" type="number" value="21" style="padding:8px;border-radius:6px;border:1px solid #ddd">
+        <button id="btn-play">Show greeting</button>
+      </div>
+
+      <div id="out-play" class="output"></div>
+
+      <pre><code>// This shows how variables hold values and how types are used in templates
+const greeting = `Hello ${name}, you are ${age} years old.`;
+</code></pre>
+    </div>
+  </div>
+
+  <script>
+   
+    function appendOutput(el, text, clear=false) {
+      if (clear) el.textContent = '';
+      el.textContent += text + "\\n";
+    }
+
+    
+    document.getElementById('btn-vars').addEventListener('click', () => {
+      const out = document.getElementById('out-vars');
+      out.textContent = '';
+    
+      var a = 5;
+      appendOutput(out, `var a = ${a}  (type: ${typeof a})`);
+      
+      let b = 10;
+      appendOutput(out, `let b = ${b}  (type: ${typeof b})`);
+    
+      const c = 15;
+      appendOutput(out, `const c = ${c}  (type: ${typeof c})`);
+      appendOutput(out, '');
+     
+      var a = 'now a string';
+      appendOutput(out, `After redeclare: var a = "${a}"  (type: ${typeof a})`);
+     
+      appendOutput(out, '');
+      appendOutput(out, 'Note: const binding cannot be reassigned; let is block-scoped; var is function/global-scoped.');
+    });
+
+   
+    document.getElementById('btn-primitives').addEventListener('click', () => {
+      const out = document.getElementById('out-primitives');
+      out.textContent = '';
+      let n = 42;
+      let s = "Hello";
+      let flag = true;
+      let empty = null;
+      let notSet;
+      let sym = Symbol('id');
+      let big = 123456789012345678901234567890n;
+
+      appendOutput(out, `n = ${n}  (typeof: ${typeof n})`);
+      appendOutput(out, `s = "${s}"  (typeof: ${typeof s})`);
+      appendOutput(out, `flag = ${flag}  (typeof: ${typeof flag})`);
+      appendOutput(out, `empty = ${empty}  (typeof: ${typeof empty})  // note: typeof null === "object" (historical JS quirk)`);
+      appendOutput(out, `notSet = ${String(notSet)}  (typeof: ${typeof notSet})`);
+      appendOutput(out, `sym = Symbol('id')  (typeof: ${typeof sym})`);
+      appendOutput(out, `big = ${big}  (typeof: ${typeof big})`);
+    });
+
+  
+    document.getElementById('btn-objects').addEventListener('click', () => {
+      const out = document.getElementById('out-objects');
+      out.textContent = '';
+      const person = { name: "Omar", age: 21 };
+      const arr = [1, "two", true, { x: 10 }];
+
+      appendOutput(out, `person = ${JSON.stringify(person)}  (typeof: ${typeof person})`);
+      appendOutput(out, `person.name -> ${person.name}`);
+      appendOutput(out, `arr = ${JSON.stringify(arr)}`);
+      appendOutput(out, `arr[3].x -> ${arr[3].x}`);
+      appendOutput(out, '');
+      appendOutput(out, 'Objects and arrays are reference types (mutable). You can change properties: person.age = 22;');
+    });
+
+
+    document.getElementById('btn-convert').addEventListener('click', () => {
+      const out = document.getElementById('out-convert');
+      out.textContent = '';
+      const val = document.getElementById('convInput').value;
+      appendOutput(out, `input value: "${val}"  (typeof: ${typeof val})`);
+      const n1 = parseInt(val, 10);
+      appendOutput(out, `parseInt -> ${n1}  (typeof: ${typeof n1})`);
+      const n2 = Number(val);
+      appendOutput(out, `Number -> ${n2}  (typeof: ${typeof n2})`);
+      const str = String(val);
+      appendOutput(out, `String -> "${str}"  (typeof: ${typeof str})`);
+      const bool = Boolean(val);
+      appendOutput(out, `Boolean -> ${bool}  (typeof: ${typeof bool})`);
+      appendOutput(out, '');
+      appendOutput(out, 'Tip: parseInt("123abc") -> 123, Number("123abc") -> NaN');
+    });
+
+   
+    document.getElementById('btn-play').addEventListener('click', () => {
+      const out = document.getElementById('out-play');
+      out.textContent = '';
+      const name = document.getElementById('playName').value;
+      const age = Number(document.getElementById('playAge').value);
+    
+      const greeting = `Hello ${name}, you are ${age} years old. (age type: ${typeof age})`;
+      appendOutput(out, greeting);
+     
+      let info = { name, age };
+      appendOutput(out, `info object: ${JSON.stringify(info)} (typeof: ${typeof info})`);
+      info.age += 1; 
+      appendOutput(out, `after info.age += 1 -> ${JSON.stringify(info)}`);
+    });
+
+    
+    document.getElementById('btn-clear-logs').addEventListener('click', () => {
+      document.getElementById('out-vars').textContent = '';
+      document.getElementById('out-primitives').textContent = '';
+      document.getElementById('out-objects').textContent = '';
+      document.getElementById('out-convert').textContent = '';
+      document.getElementById('out-play').textContent = '';
+    });
+
+   
+    document.getElementById('out-vars').textContent = 'Click "Run variable examples" to see var / let / const behavior.';
+    document.getElementById('out-primitives').textContent = 'Click "Show primitives" to list examples.';
+    document.getElementById('out-objects').textContent = 'Click "Show object & array" to see usage.';
+    document.getElementById('out-convert').textContent = 'Type text and click "Convert & typeof" to try conversions.';
+    document.getElementById('out-play').textContent = 'Use the Playground to see template literals and mutations.';
+  </script>
+</body>
+</html>
