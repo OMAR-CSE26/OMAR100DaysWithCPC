@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> JavaScript Operators & Conditions</title>
+</head>
+<body>
+  <h1>JavaScript Operators & If/Else </h1>
+  <p id="result"></p>
+
+  <script>
+    
+    let a = 15;
+    let b = 10;
+
+    
+    let sum = a + b;
+    let diff = a - b;
+    let product = a * b;
+    let division = a / b;
+
+   
+    document.getElementById("result").innerHTML =
+      "a = " + a + ", b = " + b + "<br>" +
+      "Sum = " + sum + "<br>" +
+      "Difference = " + diff + "<br>" +
+      "Product = " + product + "<br>" +
+      "Division = " + division + "<br>";
+
+    
+    if (a > b) {
+      document.getElementById("result").innerHTML += "<br>a is greater than b";
+    } else if (a < b) {
+      document.getElementById("result").innerHTML += "<br>a is less than b";
+    } else {
+      document.getElementById("result").innerHTML += "<br>a is equal to b";
+    }
+  </script>
+</body>
+</html>
