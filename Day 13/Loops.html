@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> JavaScript Loops</title>
+</head>
+<body>
+  <h1>JavaScript Loops </h1>
+
+  <h2>For Loop (1 to 5)</h2>
+  <ul id="forLoop"></ul>
+
+  <h2>While Loop (1 to 5)</h2>
+  <ul id="whileLoop"></ul>
+
+  <script>
+   
+    let forList = document.getElementById("forLoop");
+    for (let i = 1; i <= 5; i++) {
+      let li = document.createElement("li");
+      li.textContent = "Number: " + i;
+      forList.appendChild(li);
+    }
+
+   
+    let whileList = document.getElementById("whileLoop");
+    let j = 1;
+    while (j <= 5) {
+      let li = document.createElement("li");
+      li.textContent = "Count: " + j;
+      whileList.appendChild(li);
+      j++;
+    }
+  </script>
+</body>
+</html>
