@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bus Ticket Booking </title>
+  <style>
+    :root{
+      --accent:#ff6b35;
+      --dark:#0f1724;
+      --muted:#6b7280;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Arial, sans-serif; line-height:1.45;
+      background:linear-gradient(180deg,#f3f7fb 0%, #eef6ff 100%); color:var(--dark);
+    }
+    header{display:flex;justify-content:space-between;align-items:center;padding:18px 28px;background:#1976d2;color:white;}
+    nav a{color:white;text-decoration:none;margin:0 10px;font-weight:bold}
+    main{max-width:1100px;margin:auto;padding:20px}
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px}
+    .booking{background:white;padding:20px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,0.1)}
+    .form-row{display:flex;gap:12px;margin-bottom:12px}
+    .form-row .col{flex:1}
+    label{display:block;font-size:13px;margin-bottom:6px;color:var(--muted)}
+    select,input{width:100%;padding:10px;border-radius:8px;border:1px solid #ddd}
+    .seat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+    .seat{padding:8px;background:#f1f5f9;border-radius:8px;text-align:center;cursor:pointer}
+    .seat.selected{background:var(--accent);color:white}
+    .seat.booked{background:#9ca3af;color:white;cursor:not-allowed}
+    .btn{padding:12px 18px;border:none;border-radius:8px;background:var(--accent);color:white;font-weight:bold;cursor:pointer}
+    .summary{margin-top:12px;padding:10px;background:#f9fafb;border-radius:8px;font-size:14px}
+    footer{text-align:center;margin-top:30px;padding:12px;color:var(--muted)}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}}
+
+    /* login modal */
+    .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);align-items:center;justify-content:center}
+    .modal-content{background:white;padding:20px;border-radius:10px;max-width:350px;width:90%}
+    .modal-content h3{text-align:center}
+  </style>
+</head>
+<body>
+
+<header>
+  <h2>Omar Online Ticket BD</h2>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#booking">Booking</a>
+    <a href="#" onclick="openLogin()">Login</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div>
+      <h1>Book Your Bus Ticket</h1>
+      <p>Choose bus company, class, route, seats and travel easily.</p>
+    </div>
+
+    <aside class="booking" id="booking">
+      <h2>Passenger Booking</h2>
+      <form id="bookingForm" onsubmit="return handleSubmit(event)">
+        
+        <!-- Company & Class -->
+        <div class="form-row">
+          <div class="col">
+            <label for="company">Bus Company</label>
+            <select id="company" required>
+              <option value="">Select company</option>
+              <option value="Asia Air Con">Asia Air Con</option>
+              <option value="Hanif">Hanif</option>
+              <option value="Shamoly">Shamoly</option>
+              <option value="Ena">Ena</option>
+              <option value="Green Line">Green Line</option>
+              <option value="London Express">London Express</option>
+            </select>
+          </div>
+          <div class="col">
+            <label for="class">Class Type</label>
+            <select id="class" required onchange="updatePrice()">
+              <option value="">Select class</option>
+              <option value="AC">AC — ৳600</option>
+              <option value="Non-AC">Non-AC — ৳450</option>
+              <option value="Sleeper">Sleeper — ৳1000</option>
+              <option value="Business">Business — ৳1200</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Route -->
+        <div class="form-row">
+          <div class="col">
+            <label for="from">From</label>
+            <select id="from" required>
+              <option value="">Select origin</option>
+              <option>Dhaka</option>
+              <option>Chattogram</option>
+              <option>Sylhet</option>
+              <option>Rajshahi</option>
+            </select>
+          </div>
+          <div class="col">
+            <label for="to">To</label>
+            <select id="to" required>
+              <option value="">Select destination</option>
+              <option>Dhaka</option>
+              <option>Cumilla</option>
+              <option>Chattogram</option>
+              <option>Sylhet</option>
+              <option>Rajshahi</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Date & Time -->
+        <div class="form-row">
+          <div class="col">
+            <label for="date">Travel Date</label>
+            <input type="date" id="date" required>
+          </div>
+          <div class="col">
+            <label for="time">Departure Time</label>
+            <select id="time" required>
+              <option value="">Select time</option>
+              <option>06:00 AM</option>
+              <option>09:00 AM</option>
+              <option>01:00 PM</option>
+              <option>06:00 PM</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Passenger Info -->
+        <div class="form-row">
+          <div class="col">
+            <label for="pname">Passenger Name</label>
+            <input type="text" id="pname" required>
+          </div>
+          <div class="col">
+            <label for="email">Email</label>
+            <input type="email" id="email" required>
+          </div>
+        </div>
+
+        <!-- Seat Selection -->
+        <div>
+          <label>Select Seat(s) (Max 4)</label>
+          <div class="seat-grid" id="seatGrid"></div>
+          <p style="font-size:12px;margin-top:5px;">
+            <span style="display:inline-block;width:15px;height:15px;background:#f1f5f9;border-radius:3px;margin-right:5px"></span> Available
+            <span style="display:inline-block;width:15px;height:15px;background:#ff6b35;border-radius:3px;margin:0 5px 0 15px"></span> Selected
+            <span style="display:inline-block;width:15px;height:15px;background:#9ca3af;border-radius:3px;margin:0 5px 0 15px"></span> Booked
+          </p>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary" id="summary">
+          <p><b>Company:</b> <span id="sCompany">—</span></p>
+          <p><b>Class:</b> <span id="sClass">—</span></p>
+          <p><b>Route:</b> <span id="sRoute">—</span></p>
+          <p><b>Date:</b> <span id="sDate">—</span></p>
+          <p><b>Passenger:</b> <span id="sName">—</span></p>
+          <p><b>Seats:</b> <span id="sSeats">—</span></p>
+          <p><b>Total:</b> <span id="sTotal">৳ 0</span></p>
+        </div>
+
+        <button type="submit" class="btn">Confirm Booking</button>
+      </form>
+    </aside>
+  </section>
+
+  <footer id="contact">
+    © 2025 Omar Online Ticket BD service — All rights reserved
+  </footer>
+</main>
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+  <div class="modal-content">
+    <h3>Login</h3>
+    <label>Email</label>
+    <input type="email" id="loginEmail"><br><br>
+    <label>Password</label>
+    <input type="password" id="loginPass"><br><br>
+    <button class="btn" onclick="login()">Login</button>
+  </div>
+</div>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  emailjs.init("YOUR_EMAILJS_USER_ID"); // Replace with your EmailJS user ID
+
+  const seatGrid = document.getElementById("seatGrid");
+  const totalSeats = 16;
+  let selectedSeats = new Set();
+  let bookedSeats = new Set([2, 5, 9]); // Example booked seats
+  let pricePerSeat = 0;
+
+  // Generate seats
+  for (let i = 1; i <= totalSeats; i++) {
+    const div = document.createElement("div");
+    div.className = "seat";
+    div.textContent = i;
+    if (bookedSeats.has(i)) {
+      div.classList.add("booked");
+    } else {
+      div.onclick = () => toggleSeat(div, i);
+    }
+    seatGrid.appendChild(div);
+  }
+
+  function toggleSeat(el, seat) {
+    if (selectedSeats.has(seat)) {
+      selectedSeats.delete(seat);
+      el.classList.remove("selected");
+    } else {
+      if (selectedSeats.size >= 4) {
+        alert("You can book maximum 4 seats!");
+        return;
+      }
+      selectedSeats.add(seat);
+      el.classList.add("selected");
+    }
+    updateSummary();
+  }
+
+  function updatePrice() {
+    const cls = document.getElementById("class").value;
+    if (cls === "AC") pricePerSeat = 600;
+    else if (cls === "Non-AC") pricePerSeat = 450;
+    else if (cls === "Sleeper") pricePerSeat = 1000;
+    else if (cls === "Business") pricePerSeat = 1200;
+    updateSummary();
+  }
+
+  function updateSummary() {
+    document.getElementById("sCompany").innerText = document.getElementById("company").value || "—";
+    document.getElementById("sClass").innerText = document.getElementById("class").value || "—";
+    document.getElementById("sRoute").innerText = (document.getElementById("from").value || "—") + " → " + (document.getElementById("to").value || "—");
+    document.getElementById("sDate").innerText = document.getElementById("date").value || "—";
+    document.getElementById("sName").innerText = document.getElementById("pname").value || "—";
+    document.getElementById("sSeats").innerText = selectedSeats.size ? Array.from(selectedSeats).join(", ") : "—";
+    document.getElementById("sTotal").innerText = "৳ " + (pricePerSeat * selectedSeats.size);
+  }
+
+  ["company","class","from","to","date","pname","email"].forEach(id=>{
+    document.getElementById(id).addEventListener("input",updateSummary);
+  });
+
+  function handleSubmit(e){
+    e.preventDefault();
+    if(selectedSeats.size===0){ alert("Please select at least one seat"); return; }
+    const email = document.getElementById("email").value;
+
+    // Send confirmation email
+    emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{
+      to_email: email,
+      name: document.getElementById("pname").value,
+      seats: Array.from(selectedSeats).join(", "),
+      total: pricePerSeat*selectedSeats.size
+    }).then(()=>{
+      alert("Booking confirmed! Email sent to "+email);
+    }, (err)=>{
+      alert("Booking confirmed, but email failed: "+JSON.stringify(err));
+    });
+  }
+
+  // LOGIN
+  function openLogin(){ document.getElementById("loginModal").style.display="flex"; }
+  function login(){
+    let em=document.getElementById("loginEmail").value;
+    alert("Welcome "+em+"! You are logged in.");
+    document.getElementById("loginModal").style.display="none";
+  }
+</script>
+</body>
+</html>
