@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events Example</title>
+</head>
+<body>
+  <h2>Events </h2>
+
+  <button onclick="sayHello()">Click Me (onclick)</button>
+  <p id="msg1"></p>
+
+  <form id="myForm">
+    <input type="text" id="name" placeholder="Enter your name" required>
+    <button type="submit">Submit</button>
+  </form>
+  <p id="msg2"></p>
+
+  <button id="eventBtn">Click Me (AddEventListener)</button>
+  <p id="msg3"></p>
+
+  <script>
+    function sayHello() {
+      document.getElementById("msg1").innerText = "Hello! You clicked the button.";
+    }
+
+    document.getElementById("myForm").onsubmit = function(e) {
+      e.preventDefault();
+      let name = document.getElementById("name").value;
+      document.getElementById("msg2").innerText = "Form submitted. Welcome, " + name + "!";
+    }
+
+    document.getElementById("eventBtn").addEventListener("click", function() {
+      document.getElementById("msg3").innerText = "This was triggered by AddEventListener!";
+    });
+  </script>
+</body>
+</html>
