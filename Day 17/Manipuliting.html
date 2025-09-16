@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manipulating CSS with JS</title>
+  <style>
+    .highlight {
+      color: white;
+      background: teal;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .big {
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <h2 id="title">Manipulating CSS with JavaScript</h2>
+  <button onclick="changeStyle()">Change Inline Style</button>
+  <button onclick="toggleHighlight()">Toggle Class</button>
+  <button onclick="makeBig()">Make Text Bigger</button>
+
+  <script>
+    function changeStyle() {
+      let title = document.getElementById("title");
+      title.style.color = "red";
+      title.style.fontWeight = "bold";
+    }
+
+    function toggleHighlight() {
+      let title = document.getElementById("title");
+      title.classList.toggle("highlight");
+    }
+
+    function makeBig() {
+      let title = document.getElementById("title");
+      title.classList.add("big");
+    }
+  </script>
+</body>
+</html>
