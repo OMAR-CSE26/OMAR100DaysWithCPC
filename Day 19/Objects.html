@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Objects </title>
+</head>
+<body>
+  <h2>JavaScript Objects (properties, methods)</h2>
+
+  <button onclick="showInfo()">Show Student Info</button>
+  <button onclick="updateCGPA()">Update CGPA</button>
+  <button onclick="graduate()">Graduate Student</button>
+
+  <h3>Output:</h3>
+  <p id="output"></p>
+
+  <script>
+    let student = {
+      name: "Omar Faruq",
+      id: "CS D 89 124118",
+      dept: "CSE",
+      cgpa: 3.7,
+      year: 3,
+      graduated: false,
+
+      info: function() {
+        return `Name: ${this.name}, ID: ${this.id}, Dept: ${this.dept}, CGPA: ${this.cgpa}, Graduated: ${this.graduated}`;
+      },
+      updateCGPA: function(newCgpa) {
+        this.cgpa = newCgpa;
+      },
+      graduate: function() {
+        this.graduated = true;
+      }
+    };
+
+    function showInfo() {
+      document.getElementById("output").innerText = student.info();
+    }
+
+    function updateCGPA() {
+      let newCgpa = prompt("Enter new CGPA:");
+      if (newCgpa) {
+        student.updateCGPA(parseFloat(newCgpa));
+        showInfo();
+      }
+    }
+
+    function graduate() {
+      student.graduate();
+      showInfo();
+    }
+
+    showInfo();
+  </script>
+</body>
+</html>
