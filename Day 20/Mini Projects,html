@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omar Faruq's To-Do App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #6dd5ed, #2193b0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #333;
+    }
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      width: 450px;
+    }
+    h1 {
+      text-align: center;
+      color: #2193b0;
+      margin-bottom: 5px;
+    }
+    h3 {
+      text-align: center;
+      color: #555;
+      margin-top: 0;
+      font-style: italic;
+    }
+    .task-input {
+      display: flex;
+      gap: 8px;
+      margin-top: 15px;
+    }
+    input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    button {
+      padding: 8px 12px;
+      background: #2193b0;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #176580;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+      justify-content: center;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+    li {
+      background: #f9f9f9;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.3s;
+    }
+    li.completed {
+      text-decoration: line-through;
+      background: #d1ffd1;
+    }
+    .delete-btn {
+      background: crimson;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 5px 8px;
+      cursor: pointer;
+    }
+    .delete-btn:hover {
+      background: darkred;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📌 Omar Faruq's To-Do App</h1>
+    <h3>Previous List Saved in App</h3>
+
+    <div class="task-input">
+      <input type="text" id="taskInput" placeholder="Enter a new task...">
+      <button onclick="addTask()">Add</button>
+    </div>
+
+    <div class="controls">
+      <button onclick="markAllDone()">✔ Mark All Done</button>
+      <button onclick="clearAll()">🗑 Clear All</button>
+      <button onclick="filterTasks('pending')">⏳ Show Pending</button>
+      <button onclick="filterTasks('completed')">✅ Show Completed</button>
+      <button onclick="filterTasks('all')">🔄 Reset Filter</button>
+    </div>
+
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    const taskInput = document.getElementById("taskInput");
+    const taskList = document.getElementById("taskList");
+
+    window.onload = loadTasks;
+
+    function addTask() {
+      const taskText = taskInput.value.trim();
+      if (taskText === "") {
+        alert("Please enter a task!");
+        return;
+      }
+
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <span onclick="toggleComplete(this)">${taskText}</span>
+        <button class="delete-btn" onclick="deleteTask(this)">X</button>
+      `;
+      taskList.appendChild(li);
+      saveTasks();
+      taskInput.value = "";
+    }
+
+    function toggleComplete(taskSpan) {
+      taskSpan.parentElement.classList.toggle("completed");
+      saveTasks();
+    }
+
+    function deleteTask(deleteBtn) {
+      deleteBtn.parentElement.remove();
+      saveTasks();
+    }
+
+    function clearAll() {
+      taskList.innerHTML = "";
+      saveTasks();
+    }
+
+    function markAllDone() {
+      const tasks = taskList.querySelectorAll("li");
+      tasks.forEach(task => task.classList.add("completed"));
+      saveTasks();
+    }
+
+    function filterTasks(type) {
+      const tasks = taskList.querySelectorAll("li");
+      tasks.forEach(task => {
+        task.style.display = "flex";
+        if (type === "pending" && task.classList.contains("completed")) {
+          task.style.display = "none";
+        } else if (type === "completed" && !task.classList.contains("completed")) {
+          task.style.display = "none";
+        }
+      });
+    }
+
+    function saveTasks() {
+      localStorage.setItem("tasks", taskList.innerHTML);
+    }
+
+    function loadTasks() {
+      const saved = localStorage.getItem("tasks");
+      if (saved) {
+        taskList.innerHTML = saved;
+      }
+    }
+  </script>
+</body>
+</html>
