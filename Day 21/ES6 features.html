@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> ES6 Features</title>
+</head>
+<body>
+  <h2>Day 21: ES6 (let, const, arrow functions)</h2>
+
+  <button onclick="showNumbers()">Show Numbers</button>
+  <button onclick="addNumbers()">Add Numbers</button>
+  <button onclick="greetUser()">Greet User</button>
+
+  <h3>Output:</h3>
+  <div id="output"></div>
+
+  <script>
+
+    const username = "Omar Faruq";
+
+   
+    let count = 0;
+
+ 
+    const showNumbers = () => {
+      let result = "";
+      for (let i = 1; i <= 5; i++) {
+        result += i + " ";
+      }
+      document.getElementById("output").innerText = "Numbers: " + result;
+    };
+
+    const addNumbers = () => {
+      let a = 10;
+      let b = 20;
+      let sum = a + b;
+      document.getElementById("output").innerText = `Sum of ${a} + ${b} = ${sum}`;
+    };
+
+    const greetUser = () => {
+      count++;
+      document.getElementById("output").innerText = `Hello, ${username}! You clicked ${count} times.`;
+    };
+  </script>
+</body>
+</html>
