@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Destructuring Arrays & Objects</title>
+</head>
+<body>
+  <h2> Destructuring Arrays & Objects</h2>
+
+  <button onclick="arrayDestructuring()">Array Destructuring</button>
+  <button onclick="objectDestructuring()">Object Destructuring</button>
+  <button onclick="nestedDestructuring()">Nested Destructuring</button>
+
+  <h3>Output:</h3>
+  <div id="output"></div>
+
+  <script>
+    const output = document.getElementById("output");
+
+    
+    function arrayDestructuring() {
+      const fruits = ["Mango", "Banana", "Orange", "Apple"];
+      const [first, second, ...rest] = fruits;
+      output.innerText = `First: ${first}, Second: ${second}, Rest: ${rest.join(", ")}`;
+    }
+
+   
+    function objectDestructuring() {
+      const student = {
+        name: "Omar Faruq",
+        age: 22,
+        course: "Web Development",
+        city: "Dhaka"
+      };
+      const { name, age, course } = student;
+      output.innerText = `Name: ${name}, Age: ${age}, Course: ${course}`;
+    }
+
+    
+    function nestedDestructuring() {
+      const person = {
+        fullName: "Omar Faruq",
+        address: {
+          city: "Dhaka",
+          country: "Bangladesh"
+        },
+        skills: ["HTML", "CSS", "JavaScript"]
+      };
+
+      const { fullName, address: { city }, skills: [firstSkill] } = person;
+      output.innerText = `Name: ${fullName}, City: ${city}, First Skill: ${firstSkill}`;
+    }
+  </script>
+</body>
+</html>
