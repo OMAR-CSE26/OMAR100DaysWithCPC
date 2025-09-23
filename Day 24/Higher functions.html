@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Higher-Order Functions</title>
+</head>
+<body>
+              <h2> Higher-Order Functions (map, filter, reduce)</h2>
+
+                  <button onclick="useMap()">Use Map</button>
+                  <button onclick="useFilter()">Use Filter</button>
+                  <button onclick="useReduce()">Use Reduce</button>
+
+      <h3>Students:</h3>
+      <p>Scores = [26, 20, 35, 33, 8, 5]</p>
+
+       <h3>Output:</h3>
+        <div id="output"></div>
+
+  <script>
+    const output = document.getElementById("output");
+    const scores = [26, 20, 35, 33, 8, 5];
+
+
+    function useMap()
+     {
+      const doubled = scores.map(score => score * 2);
+      output.innerText = "Map (Doubled Scores): " + doubled.join(", ");
+    }
+
+ 
+    function useFilter() 
+    {
+      const passed = scores.filter(score => score >= 50);
+      output.innerText = "Filter (Scores >= 50): " + passed.join(", ");
+    }
+
+                        
+    function useReduce()
+     {
+      const total = scores.reduce((acc, val) => acc + val, 0);
+      const avg = total / scores.length;
+      output.innerText = `Reduce (Total: ${total}, Average: ${avg.toFixed(2)})`;
+    }
+  </script>
+</body>
+</html>
