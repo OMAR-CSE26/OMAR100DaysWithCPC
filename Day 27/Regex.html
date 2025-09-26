@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Regex Validation</title>
+  <style>
+    body 
+    {
+      font-family: Arial, sans-serif;
+      background: #f4f7f9;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    form 
+    {
+      max-width: 400px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    label 
+    {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+    input, button 
+    {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #007BFF;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .success {
+      color: green;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2> Regex Validation Form</h2>
+
+  <form id="regexForm">
+    <label for="email">Email:</label>
+    <input type="text" id="email" placeholder="Enter your email">
+    <div id="emailError" class="error"></div>
+
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" placeholder="01XXXXXXXXX">
+    <div id="phoneError" class="error"></div>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Min 6 chars, 1 number">
+    <div id="passwordError" class="error"></div>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <p id="successMsg" class="success"></p>
+
+  <script>
+    const form = document.getElementById("regexForm");
+    const emailInput = document.getElementById("email");
+    const phoneInput = document.getElementById("phone");
+    const passwordInput = document.getElementById("password");
+    const successMsg = document.getElementById("successMsg");
+
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+
+      let valid = true;
+      document.getElementById("emailError").innerText = "";
+      document.getElementById("phoneError").innerText = "";
+      document.getElementById("passwordError").innerText = "";
+      successMsg.innerText = "";
+
+      
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phonePattern = /^01\d{9}$/; 
+      const passwordPattern = /^(?=.*\d).{6,}$/; 
+
+      if (!emailPattern.test(emailInput.value)) {
+        document.getElementById("emailError").innerText = "Enter a valid email.";
+        valid = false;
+      }
+      if (!phonePattern.test(phoneInput.value)) {
+        document.getElementById("phoneError").innerText = "Enter valid BD phone (e.g. 01712345678).";
+        valid = false;
+      }
+      if (!passwordPattern.test(passwordInput.value)) {
+        document.getElementById("passwordError").innerText = "Password must be 6+ chars and include a number.";
+        valid = false;
+      }
+
+      if (valid) {
+        successMsg.innerText = "✅ Form submitted successfully!";
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
