@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error Handling</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+      text-align: center;
+    }
+    h2 {
+      color: #333;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #007BFF;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .output {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .error {
+      color: red;
+    }
+    .success {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h2 Error Handling (try/catch)</h2>
+
+  <input type="text" id="numberInput" placeholder="Enter a number">
+  <button onclick="calculateSquare()">Calculate Square</button>
+
+  <div id="result" class="output"></div>
+
+  <script>
+    function calculateSquare() {
+      const input = document.getElementById("numberInput").value;
+      const resultDiv = document.getElementById("result");
+
+      try {
+        if (input.trim() === "") {
+          throw "Input cannot be empty!";
+        }
+        if (isNaN(input)) {
+          throw "Please enter a valid number!";
+        }
+
+        const number = Number(input);
+        const square = number * number;
+        resultDiv.innerHTML = `<span class='success'>✅ The square of ${number} is ${square}</span>`;
+      } catch (error) {
+        resultDiv.innerHTML = `<span class='error'>❌ Error: ${error}</span>`;
+      }
+    }
+  </script>
+</body>
+</html>
