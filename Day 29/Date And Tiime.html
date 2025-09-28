@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Date & Time</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #e0f7fa, #f1f8e9);
+      text-align: center;
+      padding: 40px;
+    }
+    h2 {
+      color: #2c3e50;
+    }
+    .clock {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 20px 0;
+      color: #00796b;
+    }
+    .date {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #6a1b9a;
+    }
+    input {
+      padding: 10px;
+      margin: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .output {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #d84315;
+    }
+  </style>
+</head>
+<body>
+  <h2> Date & Time</h2>
+
+  <div class="clock" id="clock">--:--:--</div>
+  <div class="date" id="date">Loading...</div>
+
+  <h3>Pick a Date</h3>
+  <input type="date" id="dateInput">
+  <button onclick="checkDay()">Find Day</button>
+
+  <div class="output" id="dayOutput"></div>
+
+  <script>
+ 
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString();
+      const todayDate = now.toDateString();
+
+      document.getElementById("clock").innerText = time;
+      document.getElementById("date").innerText = todayDate;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+
+    function checkDay() {
+      const input = document.getElementById("dateInput").value;
+      const output = document.getElementById("dayOutput");
+
+      if (!input) {
+        output.innerText = "❌ Please select a date.";
+        return;
+      }
+
+      const date = new Date(input);
+      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      output.innerText = `✅ That day is: ${days[date.getDay()]}`;
+    }
+  </script>
+</body>
+</html>
