@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 30 - Calculator App</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #74ebd5, #acb6e5);
+    }
+
+    .calculator {
+      background: #2d3436;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      width: 320px;
+    }
+
+    .display {
+      width: 100%;
+      height: 70px;
+      background: #1e272e;
+      color: #00cec9;
+      font-size: 32px;
+      text-align: right;
+      border: none;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    button {
+      padding: 18px;
+      font-size: 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #636e72;
+      color: white;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #2d98da;
+    }
+
+    .operator {
+      background: #e17055;
+    }
+
+    .operator:hover {
+      background: #d63031;
+    }
+
+    .equal {
+      grid-column: span 2;
+      background: #00b894;
+    }
+
+    .equal:hover {
+      background: #019875;
+    }
+
+    .clear {
+      background: #fdcb6e;
+      color: black;
+    }
+
+    .clear:hover {
+      background: #e1b12c;
+    }
+
+    footer {
+      margin-top: 15px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" class="display" id="display" disabled>
+    <div class="buttons">
+      <button class="clear" onclick="clearDisplay()">C</button>
+      <button onclick="deleteChar()">DEL</button>
+      <button class="operator" onclick="append('%')">%</button>
+      <button class="operator" onclick="append('/')">÷</button>
+
+      <button onclick="append('7')">7</button>
+      <button onclick="append('8')">8</button>
+      <button onclick="append('9')">9</button>
+      <button class="operator" onclick="append('*')">×</button>
+
+      <button onclick="append('4')">4</button>
+      <button onclick="append('5')">5</button>
+      <button onclick="append('6')">6</button>
+      <button class="operator" onclick="append('-')">−</button>
+
+      <button onclick="append('1')">1</button>
+      <button onclick="append('2')">2</button>
+      <button onclick="append('3')">3</button>
+      <button class="operator" onclick="append('+')">+</button>
+
+      <button onclick="append('0')">0</button>
+      <button onclick="append('.')">.</button>
+      <button class="equal" onclick="calculate()">=</button>
+    </div>
+  </div>
+
+  <footer>
+    Designed by <span style="color:#000000;">Omar Faruq</span>
+  </footer>
+
+  <script>
+    const display = document.getElementById("display");
+
+    function append(value) {
+      display.value += value;
+    }
+
+    function clearDisplay() {
+      display.value = "";
+    }
+
+    function deleteChar() {
+      display.value = display.value.slice(0, -1);
+    }
+
+    function calculate() {
+      try {
+        display.value = eval(display.value.replace("÷", "/").replace("×", "*"));
+      } catch {
+        display.value = "Error";
+      }
+    }
+  </script>
+</body>
+</html>
