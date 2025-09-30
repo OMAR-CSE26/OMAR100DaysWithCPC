@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title> fetch() & JSON Basics</title>
+  <style>
+    body{
+      font-family: Inter, Arial, sans-serif;
+      background: linear-gradient(180deg,#f0f6ff,#f7fff6);
+      margin:0; padding:24px; color:#0f1724;
+    }
+    .card{
+      max-width:980px; margin:12px auto; background:white; border-radius:10px;
+      padding:16px; box-shadow:0 8px 30px rgba(15,23,42,0.06);
+    }
+    h1{margin:0 0 10px 0;font-size:20px}
+    .controls{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px}
+    button{padding:8px 12px;border-radius:8px;border:1px solid #e6eef8;background:#2563eb;color:white;cursor:pointer}
+    button.secondary{background:#06b6d4}
+    pre{
+      background:#0b1220;color:#e6eef8;padding:12px;border-radius:8px;overflow:auto;
+      max-height:360px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+    }
+    .row{display:flex;gap:12px;align-items:center}
+    .info{font-size:14px;color:#334155}
+    label{font-weight:600}
+    input[type="text"]{padding:8px;border-radius:6px;border:1px solid #d1d5db;width:220px}
+    .status{margin-top:10px;font-weight:600}
+    @media(max-width:700px){.row{flex-direction:column;align-items:stretch} input{width:100%}}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1> fetch() & JSON basics</h1>
+    <p class="info">This page demonstrates making GET and POST requests using <code>fetch()</code>, parsing JSON, error handling, and displaying results.</p>
+
+    <div class="controls">
+      <button id="btn-get-single">GET single resource</button>
+      <button id="btn-get-list" class="secondary">GET list of resources</button>
+      <button id="btn-post" class="secondary">POST (create) resource</button>
+      <button id="btn-invalid">GET (invalid url) → show error</button>
+    </div>
+
+    <div style="display:flex; gap:12px; margin-bottom:12px; align-items:center; flex-wrap:wrap">
+      <div class="row">
+        <label for="userId">Fetch posts by userId:</label>
+        <input id="userId" type="text" placeholder="e.g. 1">
+        <button id="btn-get-by-user">Fetch posts</button>
+      </div>
+
+      <div class="row">
+        <label for="postTitle">New post title:</label>
+        <input id="postTitle" type="text" placeholder="Enter a title">
+      </div>
+    </div>
+
+    <div class="status" id="status">Status: idle</div>
+
+    <h3>Response (JSON)</h3>
+    <pre id="output">No data yet.</pre>
+  </div>
+
+  <script>
+    const output = document.getElementById('output');
+    const statusEl = document.getElementById('status');
+
+    function setStatus(text){
+      statusEl.textContent = 'Status: ' + text;
+    }
+
+    function showJSON(data){
+      output.textContent = JSON.stringify(data, null, 2);
+    }
+
+   
+    document.getElementById('btn-get-single').addEventListener('click', async () => {
+      setStatus('loading GET single...');
+      showJSON('Loading...');
+      try{
+        const res = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+        if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+        const data = await res.json();
+        setStatus('success (single resource)');
+        showJSON(data);
+      }catch(err){
+        setStatus('error');
+        showJSON({ error: String(err) });
+      }
+    });
+
+ 
+    document.getElementById('btn-get-list').addEventListener('click', async () => {
+      setStatus('loading GET list...');
+      showJSON('Loading...');
+      try{
+        const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const list = await res.json();
+        setStatus('success (list)');
+        showJSON(list);
+      }catch(err){
+        setStatus('error');
+        showJSON({ error: String(err) });
+      }
+    });
+
+  
+    document.getElementById('btn-get-by-user').addEventListener('click', async () => {
+      const userId = document.getElementById('userId').value.trim() || '1';
+      setStatus('loading posts for userId=' + userId);
+      showJSON('Loading...');
+      try{
+        const url = `https://jsonplaceholder.typicode.com/posts?userId=${encodeURIComponent(userId)}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Fetch failed: ' + res.status);
+        const posts = await res.json();
+        setStatus('success (posts for userId=' + userId + ')');
+        showJSON(posts);
+      }catch(err){
+        setStatus('error');
+        showJSON({ error: String(err) });
+      }
+    });
+
+    
+    document.getElementById('btn-post').addEventListener('click', async () => {
+      const title = document.getElementById('postTitle').value.trim() || 'Hello from Day 31';
+      setStatus('sending POST...');
+      showJSON('Posting...');
+      try{
+        const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          },
+          body: JSON.stringify({
+            title,
+            body: 'This is a demo post created by fetch()',
+            userId: 1
+          })
+        });
+        if (!res.ok) throw new Error('POST failed: ' + res.status);
+        const created = await res.json();
+        setStatus('success (created)');
+        showJSON(created);
+      }catch(err){
+        setStatus('error');
+        showJSON({ error: String(err) });
+      }
+    });
+
+   
+    document.getElementById('btn-invalid').addEventListener('click', async () => {
+      setStatus('loading invalid url...');
+      showJSON('Loading...');
+      try{
+        const res = await fetch('https://jsonplaceholder.typicode.com/invalid-endpoint');
+        if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+        const data = await res.json();
+        setStatus('success (unexpected)');
+        showJSON(data);
+      }catch(err){
+        setStatus('error');
+        showJSON({ error: String(err) });
+      }
+    });
+
+   
+    function safeParseJSON(str){
+      try{
+        return JSON.parse(str);
+      }catch(e){
+        return null;
+      }
+    }
+
+    
+    (function demoParseExample(){
+      const sample = '{"name":"Omar","age":23,"skills":["HTML","CSS","JS"]}';
+      const parsed = safeParseJSON(sample);
+     
+      console.log('Sample parsed object:', parsed);
+    })();
+  </script>
+</body>
+</html>
