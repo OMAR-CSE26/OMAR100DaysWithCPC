@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Handling API Errors</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #1e3a8a;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 15px 0;
+      border: none;
+      border-radius: 5px;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+    .result, .error {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 6px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .result {
+      background: #dcfce7;
+      color: #166534;
+    }
+    .error {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>API Fetch with Error Handling</h1>
+  <p>Click the button to fetch user data from an API.</p>
+  <button onclick="fetchUser()">Fetch Data</button>
+
+  <div id="output"></div>
+
+  <script>
+    async function fetchUser() {
+      const output = document.getElementById("output");
+      output.innerHTML = "Loading...";
+
+      try {
+    
+        let response = await fetch("https://jsonplaceholder.typicode.com/users/1");
+
+        if (!response.ok) {
+          throw new Error("HTTP Error! Status: " + response.status);
+        }
+
+        let data = await response.json();
+        output.innerHTML = `
+          <div class="result">
+            <h3>User Found ✅</h3>
+            <p><b>Name:</b> ${data.name}</p>
+            <p><b>Email:</b> ${data.email}</p>
+            <p><b>Company:</b> ${data.company.name}</p>
+          </div>
+        `;
+      } catch (error) {
+        output.innerHTML = `
+          <div class="error">
+            <h3>⚠️ Error</h3>
+            <p>${error.message}</p>
+          </div>
+        `;
+      }
+    }
+  </script>
+
+</body>
+</html>
