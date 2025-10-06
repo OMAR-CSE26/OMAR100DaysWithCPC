@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Responsive Design | Omar Faruq</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: #f0f4f8;
+      color: #222;
+    }
+
+    header {
+      background: #004aad;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #00347d;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 14px 20px;
+      display: block;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      background: #0057d9;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .main {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .sidebar {
+      background: #e8f0fe;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      background: #00347d;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+
+    
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      nav {
+        flex-direction: column;
+      }
+      nav a {
+        text-align: center;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+      }
+    }
+
+    @media (max-width: 500px) {
+      header {
+        font-size: 18px;
+      }
+      nav a {
+        padding: 10px;
+        font-size: 14px;
+      }
+      .main, .sidebar {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Omar Faruq Responsive Web Demo</h1>
+    <p>Resize the browser to see the responsive effect</p>
+  </header>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Projects</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <div class="container">
+    <div class="main">
+      <h2>Responsive Design</h2>
+      <p>
+        This layout automatically adapts to the device screen size. 
+        On larger screens, it shows two columns. On smaller screens (like mobile),
+        it changes to a single-column layout for better readability.
+      </p>
+      <p>
+        Responsive design ensures your website looks great on all devices — 
+        desktop, tablet, or mobile.
+      </p>
+    </div>
+
+    <aside class="sidebar">
+      <h3>Sidebar</h3>
+      <p>This sidebar moves below the main content on smaller screens.</p>
+    </aside>
+  </div>
+
+  <footer>
+    © 2025 Designed by Omar Faruq | Dhaka International University
+  </footer>
+
+</body>
+</html>
