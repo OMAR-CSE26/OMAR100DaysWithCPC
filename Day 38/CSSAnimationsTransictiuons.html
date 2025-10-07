@@ -1,119 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> CSS Animation & Transition | Omar Faruq</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omar Faruq | Animated Portfolio</title>
   <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #0f62fe, #4cc9f0);
-      color: #fff;
-      text-align: center;
+    * {
       margin: 0;
-      padding: 50px;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
     }
 
-    h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
+    body {
+      background: linear-gradient(135deg, #0f62fe, #4cc9f0);
+      color: #fff;
+      overflow-x: hidden;
+      text-align: center;
+    }
+
+    header {
+      padding: 20px;
+      font-size: 20px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+    }
+
+    .hero {
+      padding: 100px 20px 60px;
       animation: fadeIn 2s ease-in-out;
     }
 
-    p {
-      font-size: 18px;
-      margin-bottom: 40px;
-      animation: slideUp 2s ease;
+    .hero h1 {
+      font-size: 48px;
+      font-weight: bold;
+      animation: slideDown 1.5s ease;
     }
 
-    .box {
-      width: 100px;
-      height: 100px;
-      background: #ff6b35;
-      margin: 0 auto 40px;
-      border-radius: 12px;
-      transition: all 0.5s ease;
+    .hero p {
+      font-size: 20px;
+      opacity: 0.9;
+      margin-top: 10px;
+      animation: fadeUp 2s ease;
     }
 
-    .box:hover {
-      transform: scale(1.2) rotate(15deg);
-      background: #06d6a0;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    .buttons {
+      margin-top: 30px;
     }
 
-    .loader {
-      width: 60px;
-      height: 60px;
-      border: 6px solid rgba(255, 255, 255, 0.3);
-      border-top-color: #fff;
-      border-radius: 50%;
-      margin: 0 auto 40px;
-      animation: spin 1s linear infinite;
-    }
-
-    .button {
+    .buttons button {
       background: #fff;
       color: #0f62fe;
-      padding: 12px 30px;
       border: none;
+      padding: 12px 25px;
+      margin: 8px;
       border-radius: 8px;
       font-size: 16px;
-      font-weight: 600;
       cursor: pointer;
-      transition: background 0.4s ease, transform 0.4s ease;
+      transition: all 0.3s ease;
     }
 
-    .button:hover {
+    .buttons button:hover {
       background: #0f62fe;
       color: #fff;
       transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .profile {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      margin: 30px auto;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+      transition: transform 0.5s ease;
+    }
+
+    .profile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile:hover {
+      transform: scale(1.1);
     }
 
     footer {
       margin-top: 60px;
+      padding: 20px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
       font-size: 14px;
-      opacity: 0.9;
-      animation: fadeIn 3s ease-in;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
+      animation: fadeIn 3s ease;
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
-    @keyframes slideUp {
-      from {
-        transform: translateY(30px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
+    @keyframes slideDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 32px; }
+      .hero p { font-size: 16px; }
+      .profile { width: 120px; height: 120px; }
     }
   </style>
 </head>
 <body>
-  <h1>CSS Animations & Transitions</h1>
-  <p>Designed by <strong>Omar Faruq</strong></p>
 
-  <div class="box"></div>
+  <header>Omar Faruq — Developer & Designer</header>
 
-  <div class="loader"></div>
+  <section class="hero">
+    <div class="profile">
+      <img src="MyPhoto.jpg" alt="Omar Faruq">
 
-  <button class="button">Click Here</button>
+    </div>
 
-  <footer>© 2025 | Created by Omar Faruq | Dhaka International University</footer>
+    <h1>Hello, I'm Omar Faruq 👋</h1>
+    <p>Web Developer | Programmer | Tech Enthusiast</p>
+
+    <div class="buttons">
+      <button id="colorBtn">Change Theme</button>
+      <button onclick="alert('Thank you for visiting Omar’s portfolio!')">Say Hi 👋</button>
+      <button onclick="window.open('https://codeforces.com/profile/omarfaruq', '_blank')">Codeforces</button>
+      <button onclick="window.open('mailto:omarfaruq@example.com')">Contact Me</button>
+    </div>
+  </section>
+
+  <footer>© 2025 | Designed & Developed by Omar Faruq | Dhaka International University</footer>
+
+  <script>
+    const colors = [
+      ['#0f62fe', '#4cc9f0'],
+      ['#ff6b35', '#fca311'],
+      ['#8338ec', '#3a86ff'],
+      ['#06d6a0', '#118ab2']
+    ];
+
+    document.getElementById('colorBtn').addEventListener('click', () => {
+      const random = colors[Math.floor(Math.random() * colors.length)];
+      document.body.style.background = `linear-gradient(135deg, ${random[0]}, ${random[1]})`;
+    });
+  </script>
 </body>
 </html>
