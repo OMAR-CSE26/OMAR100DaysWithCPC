@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> CSS Animation & Transition | Omar Faruq</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #0f62fe, #4cc9f0);
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 50px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 40px;
+      animation: slideUp 2s ease;
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      background: #ff6b35;
+      margin: 0 auto 40px;
+      border-radius: 12px;
+      transition: all 0.5s ease;
+    }
+
+    .box:hover {
+      transform: scale(1.2) rotate(15deg);
+      background: #06d6a0;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 6px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      margin: 0 auto 40px;
+      animation: spin 1s linear infinite;
+    }
+
+    .button {
+      background: #fff;
+      color: #0f62fe;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.4s ease, transform 0.4s ease;
+    }
+
+    .button:hover {
+      background: #0f62fe;
+      color: #fff;
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    footer {
+      margin-top: 60px;
+      font-size: 14px;
+      opacity: 0.9;
+      animation: fadeIn 3s ease-in;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>CSS Animations & Transitions</h1>
+  <p>Designed by <strong>Omar Faruq</strong></p>
+
+  <div class="box"></div>
+
+  <div class="loader"></div>
+
+  <button class="button">Click Here</button>
+
+  <footer>© 2025 | Created by Omar Faruq | Dhaka International University</footer>
+</body>
+</html>
