@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Omar Faruq |  Project</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: #0e0e0e;
+      color: #fff;
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(90deg, #0078ff, #00bcd4);
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    nav {
+      background: #1a1a1a;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    nav a {
+      color: #00bcd4;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #fff;
+    }
+    section {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #121212;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    h2 {
+      color: #00bcd4;
+      margin-bottom: 10px;
+    }
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .card {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      transition: transform 0.3s, background 0.3s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      background: #222;
+    }
+    .card h3 {
+      color: #00bcd4;
+      margin-bottom: 10px;
+    }
+    footer {
+      background: #0d0d0d;
+      color: #ccc;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+    button {
+      background: #00bcd4;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #0078ff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    🚀 Omar Faruq —   Web developer
+  </header>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Projects</a>
+    <a href="#">GitHub</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <section>
+    <h2>About This Project</h2>
+    <p>Hi! I’m <strong>Omar Faruq</strong>, a passionate web developer from Dhaka International University.  
+      This website is built to celebrate my <strong>Day 39</strong> of the 100 Days Web Development Challenge.  
+      Today, I learned Git & GitHub basics and created this portfolio to document my journey.</p>
+  </section>
+
+  <section>
+    <h2>Projects Completed</h2>
+    <div class="projects">
+      <div class="card">
+        <h3>Day 10: Personal Bio Website</h3>
+        <p>A simple responsive portfolio using HTML & CSS.</p>
+      </div>
+      <div class="card">
+        <h3>Day 20: To-Do List App</h3>
+        <p>JavaScript-powered To-Do list with local storage.</p>
+      </div>
+      <div class="card">
+        <h3>Day 30: Calculator App</h3>
+        <p>A fully functional calculator designed by Omar Faruq.</p>
+      </div>
+      <div class="card">
+        <h3>Day 35: Random Joke App (API)</h3>
+        <p>Fetched jokes using an external API using fetch() and async/await.</p>
+      </div>
+      <div class="card">
+        <h3>Day 38: CSS + JS Animation</h3>
+        <p>Fun animations combining CSS transitions and JS triggers.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Connect with Me</h2>
+    <p>Follow my GitHub for daily updates on my learning challenge.</p>
+    <button id="visitGithub">Visit My GitHub</button>
+  </section>
+
+  <footer>
+    Created with ❤️ by Omar Faruq | Dhaka International University | © 2025
+  </footer>
+
+  <script>
+    document.getElementById("visitGithub").addEventListener("click", function() {
+      alert("Redirecting to Omar Faruq’s GitHub profile...");
+      window.location.href = "https://github.com/OMAR-CSE26"; 
+    });
+  </script>
+</body>
+</html>
