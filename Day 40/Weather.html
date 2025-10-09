@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Omar Faruq | Live Weather App</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:"Poppins",sans-serif;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    min-height:100vh;
+    background:linear-gradient(135deg,#74ebd5,#9face6);
+    transition:background 1s ease-in-out;
+    overflow:hidden;
+    padding:20px
+  }
+
+
+  .clouds,.rain,.snow,.stars{
+    position:fixed;width:100%;height:100%;
+    pointer-events:none;z-index:0
+  }
+  .clouds::before,.clouds::after{
+    content:"";position:absolute;
+    background:url("https://i.imgur.com/9Qx9pnb.png") repeat-x;
+    top:0;left:0;width:200%;height:100%;opacity:.5;
+    animation:moveClouds 60s linear infinite
+  }
+  .clouds::after{animation-duration:120s;opacity:.3}
+  @keyframes moveClouds{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  .rain::before{
+    content:"";position:absolute;width:100%;height:100%;
+    background-image:url("https://i.imgur.com/NM8yMqq.png");
+    animation:rain .5s linear infinite;opacity:.5
+  }
+  @keyframes rain{from{background-position:0 0}to{background-position:0 100%}}
+
+  .snow::before{
+    content:"";position:absolute;width:100%;height:100%;
+    background-image:url("https://i.imgur.com/aYZ6QXk.png");
+    animation:snow 10s linear infinite;opacity:.6
+  }
+  @keyframes snow{from{background-position:0 0}to{background-position:0 100%}}
+
+  .stars{
+    background:url("https://i.imgur.com/9eGgA5v.png") repeat;
+    animation:twinkle 10s ease-in-out infinite alternate
+  }
+  @keyframes twinkle{from{opacity:.5}to{opacity:1}}
+
+  .app{
+    position:relative;z-index:10;
+    background:rgba(0,0,0,.4);border-radius:20px;
+    padding:20px;width:100%;max-width:500px;text-align:center;
+    box-shadow:0 4px 15px rgba(0,0,0,.2);backdrop-filter:blur(8px)
+  }
+  h1{margin-bottom:10px;font-size:1.8rem}
+  #current img{width:100px;height:100px;margin-top:10px}
+  #datetime{margin:10px 0;font-size:1.1rem}
+  .forecast{margin-top:25px}
+  .day{
+    background:rgba(255,255,255,.1);border-radius:10px;
+    padding:10px;margin-bottom:10px;
+    display:flex;justify-content:space-between;align-items:center
+  }
+  .footer{margin-top:20px;font-size:14px;opacity:.8}
+</style>
+</head>
+<body>
+<div class="clouds"></div>
+<div class="rain"></div>
+<div class="snow"></div>
+<div class="stars"></div>
+
+<div class="app">
+  <h1>🌤️ Omar Faruq’s Live Weather App</h1>
+  <div id="datetime">Loading time...</div>
+  <div id="current"><p>Loading weather...</p></div>
+  <div class="forecast" id="forecast"></div>
+  <div class="footer">© 2025 | DIU | Smart Weather Forecast</div>
+</div>
+
+<script>
+const apiKey = "ea72475e56eddb3180274dace1c9e888";
+
+const layers = {
+  clouds: document.querySelector(".clouds"),
+  rain: document.querySelector(".rain"),
+  snow: document.querySelector(".snow"),
+  stars: document.querySelector(".stars")
+};
+
+async function fetchWeather(lat, lon) {
+  const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=minutely,hourly,alerts&appid=${apiKey}`;
+  const res = await fetch(url);
+  if(!res.ok) throw new Error("Weather fetch failed");
+  return res.json();
+}
+
+function hideAllLayers(){
+  Object.values(layers).forEach(l=>l.style.display="none");
+}
+
+function setTheme(weather,isDay){
+  hideAllLayers();
+  let bg="";
+  const body=document.body;
+
+  if(!isDay){
+    layers.stars.style.display="block";
+    bg="linear-gradient(135deg,#0f2027,#203a43,#2c5364)";
+  } else if(weather.includes("rain")){
+    layers.rain.style.display="block";
+    bg="linear-gradient(135deg,#667db6,#0082c8,#0082c8,#667db6)";
+  } else if(weather.includes("snow")){
+    layers.snow.style.display="block";
+    bg="linear-gradient(135deg,#E0EAFC,#CFDEF3)";
+  } else if(weather.includes("cloud")){
+    layers.clouds.style.display="block";
+    bg="linear-gradient(135deg,#757F9A,#D7DDE8)";
+  } else {
+    bg="linear-gradient(135deg,#56CCF2,#2F80ED)";
+  }
+
+  body.style.background=bg;
+}
+
+function displayCurrent(data){
+  const cur=data.current;
+  const isDay=cur.dt>data.current.sunrise && cur.dt<data.current.sunset;
+  const weather=cur.weather[0].main.toLowerCase();
+  setTheme(weather,isDay);
+
+  const icon=cur.weather[0].icon;
+  const tz=data.timezone;
+  const city=tz.split("/").pop().replace("_"," ");
+
+  document.getElementById("current").innerHTML=`
+    <h2>${city}</h2>
+    <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${weather}">
+    <p><b>${cur.temp.toFixed(1)}°C</b> — ${cur.weather[0].description}</p>
+    <p>Humidity: ${cur.humidity}% | Wind: ${cur.wind_speed} m/s</p>
+  `;
+
+  startClock(data.timezone_offset);
+}
+
+function displayForecast(data){
+  const div=document.getElementById("forecast");
+  div.innerHTML="<h3>7-Day Forecast</h3>";
+  data.daily.slice(0,7).forEach(day=>{
+    const date=new Date(day.dt*1000);
+    const opt={weekday:"short",month:"short",day:"numeric"};
+    const dname=date.toLocaleDateString(undefined,opt);
+    const min=day.temp.min.toFixed(1);
+    const max=day.temp.max.toFixed(1);
+    const icon=day.weather[0].icon;
+    const desc=day.weather[0].description;
+    div.innerHTML+=`
+      <div class="day">
+        <p>${dname}</p>
+        <img src="https://openweathermap.org/img/wn/${icon}.png" alt="${desc}">
+        <p>${max}°C / ${min}°C</p>
+        <p>${desc}</p>
+      </div>`;
+  });
+}
+
+function startClock(offset){
+  function update(){
+    const now=new Date(new Date().getTime()+offset*1000);
+    document.getElementById("datetime").innerText=now.toUTCString();
+  }
+  update();
+  setInterval(update,1000);
+}
+
+if("geolocation" in navigator){
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    try{
+      const data=await fetchWeather(pos.coords.latitude,pos.coords.longitude);
+      displayCurrent(data);
+      displayForecast(data);
+    }catch(e){
+      document.getElementById("current").innerHTML=`<p style="color:yellow">${e.message}</p>`;
+    }
+  },err=>{
+    document.getElementById("current").innerHTML=`<p>${err.message}</p>`;
+  });
+}else{
+  document.getElementById("current").innerHTML=`<p>Geolocation not supported.</p>`;
+}
+</script>
+</body>
+</html>
