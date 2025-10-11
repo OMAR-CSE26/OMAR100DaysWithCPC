@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Advanced Selectors & CSS Variables</title>
+  <style>
+   
+    :root {
+      --primary-color: #00a8ff;
+      --secondary-color: #9c88ff;
+      --background: #1e1e2f;
+      --text-color: #f5f6fa;
+      --card-bg: #2f3640;
+      --hover: #273c75;
+      --radius: 10px;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: var(--background);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    p + p {
+      color: var(--secondary-color);
+    }
+
+    .card-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      padding: 20px;
+      border-radius: var(--radius);
+      width: 200px;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .card:hover {
+      background-color: var(--hover);
+      transform: translateY(-10px);
+    }
+
+ 
+    a[target="_blank"] {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a[target="_blank"]:hover {
+      text-decoration: underline;
+    }
+
+
+    .card > h3 {
+      color: var(--secondary-color);
+      margin-bottom: 10px;
+    }
+
+   
+    h3 ~ p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+   
+    .card:nth-child(odd) {
+      border: 2px solid var(--secondary-color);
+    }
+
+    .card:nth-child(even) {
+      border: 2px solid var(--primary-color);
+    }
+
+    button {
+      background: var(--primary-color);
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      color: white;
+      margin-top: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: var(--secondary-color);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1> Advanced Selectors & CSS Variables</h1>
+  <p>Learn how to use CSS variables for better design control.</p>
+  <p>Explore advanced selectors like nth-child, sibling, and attribute selectors!</p>
+
+  <div class="card-container">
+    <div class="card">
+      <h3>Profile Card</h3>
+      <p>This is a simple card using CSS variables.</p>
+    </div>
+    <div class="card">
+      <h3>Project Card</h3>
+      <p>Shows how nth-child() selector works.</p>
+    </div>
+    <div class="card">
+      <h3>Contact Card</h3>
+      <p>Uses sibling and child selectors for layout.</p>
+    </div>
+  </div>
+
+  <a href="https://github.com" target="_blank">Visit GitHub</a>
+  <br>
+  <button>Change Theme</button>
+
+  <footer>Designed by Omar Faruq | Project</footer>
+
+  <script>
+    const button = document.querySelector("button");
+    let darkMode = true;
+
+    button.addEventListener("click", () => {
+      if (darkMode) {
+        document.documentElement.style.setProperty("--background", "#f5f6fa");
+        document.documentElement.style.setProperty("--text-color", "#2f3640");
+        document.documentElement.style.setProperty("--card-bg", "#dcdde1");
+        document.documentElement.style.setProperty("--primary-color", "#273c75");
+        document.documentElement.style.setProperty("--secondary-color", "#40739e");
+        button.textContent = "Switch to Dark Mode";
+      } else {
+        document.documentElement.style.setProperty("--background", "#1e1e2f");
+        document.documentElement.style.setProperty("--text-color", "#f5f6fa");
+        document.documentElement.style.setProperty("--card-bg", "#2f3640");
+        document.documentElement.style.setProperty("--primary-color", "#00a8ff");
+        document.documentElement.style.setProperty("--secondary-color", "#9c88ff");
+        button.textContent = "Switch to Light Mode";
+      }
+      darkMode = !darkMode;
+    });
+  </script>
+</body>
+</html>
