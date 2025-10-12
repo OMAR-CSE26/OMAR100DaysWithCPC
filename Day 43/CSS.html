@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsive Navbar  | Omar Faruq</title>
+<style>
+  :root {
+    --primary: #1976d2;
+    --secondary: #42a5f5;
+    --light-bg: #f5f9ff;
+    --dark-bg: #121212;
+    --text-dark: #222;
+    --text-light: #fff;
+  }
+
+  * {margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif;}
+  html {scroll-behavior:smooth;}
+  body {
+    background: var(--light-bg);
+    color: var(--text-dark);
+    transition: background 0.3s, color 0.3s;
+  }
+
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    padding: 14px 28px;
+    color: white;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  }
+
+  header h2 {
+    font-size: 24px;
+    letter-spacing: 1px;
+  }
+
+
+  nav ul {
+    display: flex;
+    list-style: none;
+    gap: 26px;
+  }
+
+  nav ul li a {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+  }
+
+  nav ul li a::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #ffeb3b;
+    transition: width 0.3s;
+  }
+
+  nav ul li a:hover::after,
+  nav ul li a.active::after {
+    width: 100%;
+  }
+
+  
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+  }
+
+  .menu-toggle div {
+    width: 26px;
+    height: 3px;
+    background: white;
+    border-radius: 3px;
+    transition: transform 0.3s;
+  }
+
+
+  .toggle-mode {
+    background: #fff;
+    color: #1976d2;
+    border: none;
+    border-radius: 30px;
+    padding: 6px 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .toggle-mode:hover {
+    background: #1976d2;
+    color: #fff;
+  }
+
+ 
+  @media (max-width: 768px) {
+    nav ul {
+      position: absolute;
+      top: 65px;
+      left: 0;
+      width: 100%;
+      background: var(--primary);
+      flex-direction: column;
+      align-items: center;
+      display: none;
+      padding: 20px 0;
+    }
+    nav ul.show {display: flex;}
+    .menu-toggle {display: flex;}
+  }
+
+
+  section {
+    padding: 80px 20px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  section:nth-child(even) {background: #e3f2fd;}
+  section h2 {color: var(--primary);font-size: 30px;margin-bottom: 10px;}
+  section p {color: #555;font-size: 16px;max-width: 600px;margin: auto;}
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    background: #1976d2;
+    color: white;
+  }
+
+
+  body.dark {
+    background: var(--dark-bg);
+    color: var(--text-light);
+  }
+  body.dark header {
+    background: linear-gradient(90deg, #0d47a1, #1565c0);
+  }
+  body.dark nav ul li a {color: #fff;}
+  body.dark section:nth-child(even) {background: #1e1e1e;}
+  body.dark .toggle-mode {background: #1565c0;color: #fff;}
+</style>
+</head>
+<body>
+
+<header>
+  <h2>Omar Faruq Web</h2>
+  <div class="menu-toggle" id="menu-toggle">
+    <div></div><div></div><div></div>
+  </div>
+  <nav>
+    <ul id="nav-links">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <button class="toggle-mode" id="theme-toggle">🌙 Dark</button>
+</header>
+
+<section id="home">
+  <h2>Welcome to Omar Faruq’s Web</h2>
+  <p>This is a fully responsive and animated navbar with dark/light mode and smooth scroll transitions.</p>
+</section>
+
+<section id="about">
+  <h2>About Me</h2>
+  <p>I’m Omar Faruq, a passionate web developer focused on creative UI design and dynamic front-end experiences.</p>
+</section>
+
+<section id="projects">
+  <h2>My Projects</h2>
+  <p>Explore the 100 Days of Web Development Challenge: HTML, CSS, JS, APIs, and Full Stack projects.</p>
+</section>
+
+<section id="blog">
+  <h2>Blog & Tutorials</h2>
+  <p>Sharing knowledge about modern web technologies, frameworks, and performance optimization.</p>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p>Let's collaborate! Reach out on <a href="#" style="color:#1976d2;font-weight:bold;">GitHub</a> or via email.</p>
+</section>
+
+<footer>
+  Designed & Developed by <b>Omar Faruq</b> © 2025
+</footer>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const nav = document.getElementById("nav-links");
+  const links = nav.querySelectorAll("a");
+  const themeToggle = document.getElementById("theme-toggle");
+
+
+  toggle.addEventListener("click", () => {
+    nav.classList.toggle("show");
+  });
+
+
+  links.forEach(link => {
+    link.addEventListener("click", () => {
+      links.forEach(l => l.classList.remove("active"));
+      link.classList.add("active");
+      nav.classList.remove("show");
+    });
+  });
+
+
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    themeToggle.textContent = document.body.classList.contains("dark") ? "☀️ Light" : "🌙 Dark";
+  });
+
+
+  const sections = document.querySelectorAll("section");
+  window.addEventListener("scroll", () => {
+    sections.forEach(sec => {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 100) sec.classList.add("visible");
+    });
+  });
+</script>
+
+</body>
+</html>
