@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> Layout Practice by Omar Faruq</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Poppins',sans-serif;
+  background:#f5f7fa;color:#333;
+  line-height:1.6;
+}
+header{
+  background:#1976d2;color:white;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 60px;flex-wrap:wrap;
+}
+header h1{font-size:1.6rem;}
+nav a{
+  color:white;text-decoration:none;margin:0 15px;font-weight:500;
+}
+nav a:hover{text-decoration:underline;}
+.hero{
+  background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+  color:white;text-align:center;padding:120px 20px;
+}
+.hero h2{font-size:2.5rem;margin-bottom:10px;}
+.hero p{font-size:1.2rem;margin-bottom:25px;}
+.btn{
+  background:#42a5f5;border:none;color:white;padding:12px 28px;
+  border-radius:25px;font-size:1rem;cursor:pointer;
+}
+.btn:hover{background:#64b5f6;}
+section{padding:60px 20px;max-width:1100px;margin:auto;}
+h2.section-title{text-align:center;color:#1976d2;margin-bottom:40px;font-size:2rem;}
+.services{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;
+}
+.card{
+  background:white;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);
+  padding:25px;text-align:center;transition:.3s;
+}
+.card:hover{transform:translateY(-5px);}
+.card img{width:80px;margin-bottom:15px;}
+.portfolio{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;
+}
+.portfolio img{
+  width:100%;border-radius:10px;transition:.3s;
+}
+.portfolio img:hover{transform:scale(1.05);}
+footer{
+  background:#0d47a1;color:white;text-align:center;padding:30px 10px;
+}
+footer p{margin:8px 0;}
+@media(max-width:700px){
+ header{padding:20px;}
+ nav{margin-top:10px;text-align:center;width:100%;}
+ nav a{display:inline-block;margin:8px;}
+ .hero h2{font-size:2rem;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Omar Faruq Agency</h1>
+  <nav>
+    <a href="#services">Services</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>We Design Modern Websites</h2>
+  <p>Creative layouts built with HTML, CSS, and love ❤️</p>
+  <button class="btn">Get Started</button>
+</section>
+
+<section id="services">
+  <h2 class="section-title">Our Services</h2>
+  <div class="services">
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/906/906175.png" alt="">
+      <h3>Web Design</h3>
+      <p>Responsive and modern designs that look great on all devices.</p>
+    </div>
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" alt="">
+      <h3>Development</h3>
+      <p>Clean, optimized code using HTML, CSS, and JavaScript frameworks.</p>
+    </div>
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/2920/2920342.png" alt="">
+      <h3>Branding</h3>
+      <p>We create brand identities that connect with your target audience.</p>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <h2 class="section-title">Our Portfolio</h2>
+  <div class="portfolio">
+    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="">
+    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80" alt="">
+    <img src="https://images.unsplash.com/photo-1487014679447-9f8336841d58?auto=format&fit=crop&w=600&q=80" alt="">
+    <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=600&q=80" alt="">
+  </div>
+</section>
+
+<footer id="contact">
+  <p>📧 omarfaruq2004bd@gmail.com</p>
+  <p>🌐 www.omarfaruqdesign.com</p>
+  <p>© 2025 Omar Faruq. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
