@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omar Faruq Portfolio | Advanced</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
+body{
+  font-family:'Poppins',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  transition:.3s;
+}
+:root{
+  --bg:#f5f5f5;
+  --text:#333;
+  --primary:#1976d2;
+  --secondary:#ff9800;
+}
+.dark-theme{
+  --bg:#121212;
+  --text:#e0e0e0;
+  --primary:#42a5f5;
+  --secondary:#fbc02d;
+}
+
+
+header{
+  background:var(--primary);
+  color:white;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 50px;
+  position:fixed;top:0;left:0;width:100%;
+  z-index:10;
+  box-shadow:0 3px 10px rgba(0,0,0,0.2);
+}
+header h1{font-size:1.5rem;}
+nav{
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+nav a{
+  color:white;text-decoration:none;
+  font-weight:500;transition:.3s;
+}
+nav a:hover{color:var(--secondary);}
+.theme-toggle, .menu-toggle{
+  background:none;border:none;color:white;
+  font-size:1.2rem;cursor:pointer;
+}
+#clock{font-size:.9rem;margin-left:10px;}
+
+
+.hero{
+  background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+  url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80') center/cover;
+  height:100vh;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;color:white;padding:0 20px;
+}
+.hero h2{font-size:2.8rem;margin-bottom:10px;}
+.hero p{font-size:1.2rem;margin-bottom:20px;}
+.btn{
+  background:var(--secondary);border:none;color:white;padding:12px 30px;
+  border-radius:25px;font-size:1rem;cursor:pointer;
+  transition:.3s;
+}
+.btn:hover{background:#ffa726;transform:scale(1.05);}
+
+
+section{padding:90px 20px;max-width:1100px;margin:auto;}
+h2.section-title{text-align:center;color:var(--primary);font-size:2rem;margin-bottom:40px;}
+
+
+.about{display:flex;flex-wrap:wrap;align-items:center;gap:30px;}
+.about img{width:300px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,.2);}
+.about-text{flex:1;}
+.about-text p{margin-bottom:15px;}
+
+
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:25px;}
+.skill{background:white;padding:20px;border-radius:10px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+.skill h3{color:var(--primary);}
+.progress{width:100%;background:#ddd;border-radius:20px;height:10px;margin-top:8px;}
+.progress-bar{height:10px;background:var(--primary);border-radius:20px;width:0;transition:width 1s;}
+
+
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px;}
+.project{background:white;padding:15px;border-radius:10px;box-shadow:0 3px 10px rgba(0,0,0,0.1);transition:.3s;}
+.project:hover{transform:translateY(-5px);}
+.project img{width:100%;border-radius:8px;margin-bottom:10px;}
+
+
+.contact{text-align:center;}
+form{max-width:500px;margin:auto;text-align:left;display:flex;flex-direction:column;gap:15px;}
+input,textarea{padding:10px;border-radius:8px;border:1px solid #ccc;font-size:1rem;}
+textarea{resize:none;height:120px;}
+button[type=submit]{align-self:center;background:var(--primary);color:white;border:none;padding:10px 25px;border-radius:25px;cursor:pointer;}
+button[type=submit]:hover{background:#42a5f5;}
+
+
+#topBtn{
+  position:fixed;bottom:30px;right:30px;background:var(--primary);
+  color:white;border:none;padding:12px 16px;border-radius:50%;
+  font-size:1.2rem;cursor:pointer;display:none;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+#topBtn:hover{background:var(--secondary);}
+
+
+footer{background:#0d47a1;color:white;text-align:center;padding:25px 10px;}
+
+
+@media(max-width:768px){
+  nav{display:none;flex-direction:column;background:var(--primary);position:absolute;top:60px;right:0;padding:20px;border-radius:8px;}
+  nav.show{display:flex;}
+  .hero h2{font-size:2rem;}
+  .about{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Omar Faruq</h1>
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div>
+    <span id="clock"></span>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h2>Hi, I’m Omar Faruq 👋</h2>
+  <p>Front-End Developer | Creative Designer | CSE @ DIU</p>
+  <button class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'});">Hire Me</button>
+</section>
+
+<section id="about">
+  <h2 class="section-title">About Me</h2>
+  <div class="about">
+    <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=500&q=80" alt="Omar Faruq">
+    <div class="about-text">
+      <p>I’m a passionate web developer from Dhaka International University, learning daily through practical projects. My focus is on writing clean, responsive code that creates seamless experiences.</p>
+      <p>Currently on a 100-day Web Development challenge — building, learning, and growing one project at a time.</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <h2 class="section-title">Skills</h2>
+  <div class="skills">
+    <div class="skill">
+      <h3>HTML</h3>
+      <div class="progress"><div class="progress-bar" data-value="95"></div></div>
+    </div>
+    <div class="skill">
+      <h3>CSS</h3>
+      <div class="progress"><div class="progress-bar" data-value="90"></div></div>
+    </div>
+    <div class="skill">
+      <h3>JavaScript</h3>
+      <div class="progress"><div class="progress-bar" data-value="85"></div></div>
+    </div>
+    <div class="skill">
+      <h3>React</h3>
+      <div class="progress"><div class="progress-bar" data-value="70"></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2 class="section-title">Projects</h2>
+  <div class="projects">
+    <div class="project">
+      <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80">
+      <h3>Weather App</h3>
+      <p>Live weather with animated backgrounds and 7-day forecast.</p>
+    </div>
+    <div class="project">
+      <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80">
+      <h3>To-Do List App</h3>
+      <p>Smart task management app built with JS and local storage.</p>
+    </div>
+    <div class="project">
+      <img src="https://images.unsplash.com/photo-1554774853-aae0a22c8aa4?auto=format&fit=crop&w=600&q=80">
+      <h3>Portfolio Website</h3>
+      <p>Personal responsive site with animations and dark mode.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2 class="section-title">Contact Me</h2>
+  <form onsubmit="return sendMessage(event)">
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="email" id="email" placeholder="Your Email" required>
+    <textarea id="message" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
+
+<footer>
+  <p>© 2025 Omar Faruq | All Rights Reserved.</p>
+</footer>
+
+<button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'});">⬆</button>
+
+<script>
+
+function toggleTheme(){document.body.classList.toggle('dark-theme');}
+
+
+function toggleMenu(){
+  document.querySelector('nav').classList.toggle('show');
+}
+
+
+setInterval(()=>{
+  const now=new Date();
+  document.getElementById('clock').innerText=now.toLocaleTimeString();
+},1000);
+
+
+window.onscroll=function(){
+  const topBtn=document.getElementById('topBtn');
+  if(document.documentElement.scrollTop>200){topBtn.style.display='block';}
+  else{topBtn.style.display='none';}
+};
+
+
+const bars=document.querySelectorAll('.progress-bar');
+window.addEventListener('scroll',()=>{
+  bars.forEach(bar=>{
+    const pos=bar.getBoundingClientRect().top;
+    if(pos<window.innerHeight){
+      bar.style.width=bar.dataset.value+'%';
+    }
+  });
+});
+
+
+function sendMessage(e){
+  e.preventDefault();
+  const name=document.getElementById('name').value;
+  const email=document.getElementById('email').value;
+  const message=document.getElementById('message').value;
+  if(!email.includes('@')){
+    alert('Please enter a valid email!');
+    return false;
+  }
+  alert(`Thanks ${name}! Your message has been sent successfully ✅`);
+  e.target.reset();
+  return false;
+}
+</script>
+</body>
+</html>
