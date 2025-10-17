@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title> Pro: Accessible Web | Omar Faruq</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f6fa;
+  --text: #333;
+  --primary: #1976d2;
+  --accent: #42a5f5;
+  --card: #fff;
+}
+[data-theme="dark"] {
+  --bg: #121212;
+  --text: #f5f5f5;
+  --primary: #90caf9;
+  --accent: #64b5f6;
+  --card: #1e1e1e;
+}
+* {box-sizing: border-box; margin: 0; padding: 0;}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  transition: background 0.4s, color 0.4s;
+}
+header {
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  flex-wrap: wrap;
+}
+header h1 {font-size: 1.5rem;}
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: 500;
+  padding: 5px 8px;
+  border-radius: 4px;
+}
+nav a:focus, nav a:hover {
+  background: rgba(255,255,255,0.2);
+  outline: 2px solid #fff;
+}
+button.theme-toggle {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+button.theme-toggle:focus {
+  outline: 3px solid yellow;
+}
+.hero {
+  background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80') center/cover;
+  color: white;
+  text-align: center;
+  height: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+.hero h1 {
+  position: relative;
+  z-index: 1;
+  font-size: 2.2rem;
+}
+main {
+  padding: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+.card {
+  background: var(--card);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: background 0.3s, color 0.3s;
+}
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.card-content {
+  padding: 15px;
+}
+.card-content h3 {
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+.card-content button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.card-content button:hover, .card-content button:focus {
+  transform: scale(1.05);
+  outline: 2px solid var(--primary);
+}
+footer {
+  background: var(--primary);
+  color: white;
+  text-align: center;
+  padding: 25px 10px;
+  margin-top: 30px;
+}
+footer a {
+  color: #ffeb3b;
+  text-decoration: none;
+  margin: 0 8px;
+}
+footer a:hover, footer a:focus {
+  text-decoration: underline;
+}
+#liveRegion {
+  position: absolute;
+  left: -9999px;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+@media (max-width: 700px) {
+  header {padding: 15px;}
+  .hero h1 {font-size: 1.8rem;}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="siteTitle">Omar Faruq Accessible Web</h1>
+  <nav aria-label="Main Navigation">
+    <a href="#home" aria-label="Go to Home">Home</a>
+    <a href="#services" aria-label="View Services">Services</a>
+    <a href="#contact" aria-label="Contact Us">Contact</a>
+  </nav>
+  <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Toggle dark or light mode">
+    🌞 Light Mode
+  </button>
+</header>
+
+<section class="hero" role="banner" aria-labelledby="siteTitle">
+  <h1>Accessible & Smart Design by Omar Faruq</h1>
+</section>
+
+<main id="services" aria-label="Main Content Section">
+  <article class="card">
+    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80"
+      alt="Developer coding on a laptop in workspace">
+    <div class="card-content">
+      <h3>Web Development</h3>
+      <p>Accessible, modern, and responsive web apps for everyone.</p>
+      <button aria-label="Learn more about Web Development">Learn More</button>
+    </div>
+  </article>
+
+  <article class="card">
+    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80"
+      alt="Graphic tools and color palette for design work">
+    <div class="card-content">
+      <h3>Graphic Design</h3>
+      <p>High contrast and readable designs for both print and digital users.</p>
+      <button aria-label="Learn more about Graphic Design">Learn More</button>
+    </div>
+  </article>
+
+  <article class="card">
+    <img src="https://images.unsplash.com/photo-1581093588401-22da1ee1a1a1?auto=format&fit=crop&w=800&q=80"
+      alt="Mobile phone with user interface displayed">
+    <div class="card-content">
+      <h3>App Development</h3>
+      <p>Apps that are accessible, robust, and follow WAI-ARIA standards.</p>
+      <button aria-label="Learn more about App Development">Learn More</button>
+    </div>
+  </article>
+</main>
+
+<footer role="contentinfo" aria-label="Website Footer">
+  <p>© 2025 Omar Faruq | Accessible Design Initiative</p>
+  <p>Follow me:
+    <a href="#" aria-label="Omar's GitHub profile">GitHub</a> |
+    <a href="#" aria-label="Omar's LinkedIn profile">LinkedIn</a> |
+    <a href="#" aria-label="Email Omar">Email</a>
+  </p>
+</footer>
+
+<div id="liveRegion" aria-live="polite"></div>
+
+<script>
+const toggleBtn = document.getElementById("themeToggle");
+const liveRegion = document.getElementById("liveRegion");
+const currentTheme = localStorage.getItem("theme") || "light";
+
+if(currentTheme === "dark") {
+  document.documentElement.setAttribute("data-theme", "dark");
+  toggleBtn.innerText = "🌙 Dark Mode";
+  toggleBtn.setAttribute("aria-pressed", "true");
+}
+
+toggleBtn.addEventListener("click", () => {
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  if(isDark){
+    document.documentElement.removeAttribute("data-theme");
+    localStorage.setItem("theme", "light");
+    toggleBtn.innerText = "🌞 Light Mode";
+    toggleBtn.setAttribute("aria-pressed", "false");
+    liveRegion.innerText = "Switched to light mode";
+  } else {
+    document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "dark");
+    toggleBtn.innerText = "🌙 Dark Mode";
+    toggleBtn.setAttribute("aria-pressed", "true");
+    liveRegion.innerText = "Switched to dark mode";
+  }
+});
+</script>
+</body>
+</html>
