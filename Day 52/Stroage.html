@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Omar Faruq | Storage Demo</title>
+  <meta name="description" content="Demonstration of LocalStorage vs SessionStorage by Omar Faruq.">
+
+  <style>
+    :root {
+      --bg: #f0f4f8;
+      --accent: #1976d2;
+      --text: #222;
+      --card: #fff;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--accent);
+      color: #fff;
+      width: 100%;
+      padding: 30px 10px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    header p {
+      margin: 5px 0 0;
+      font-size: 1rem;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 15px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+
+    ul {
+      list-style: disc;
+      padding-left: 20px;
+    }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 20px;
+      color: var(--text);
+    }
+
+    @media(max-width: 600px) {
+      input {
+        font-size: 0.9rem;
+      }
+      button {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Omar Faruq | Storage Demo</h1>
+    <p>Compare SessionStorage vs LocalStorage</p>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h2>Visitor Counter</h2>
+      <p>Session Visitors: <span id="sessionCount">0</span></p>
+      <p>Total Visitors (All time): <span id="localCount">0</span></p>
+      <button onclick="resetSession()">Reset Session Count</button>
+      <button onclick="resetLocal()">Reset Total Count</button>
+    </div>
+
+    <div class="card">
+      <h2>Quick Notes Tracker</h2>
+      <input type="text" id="noteInput" placeholder="Write a note..." />
+      <button onclick="addNote()">Add Note</button>
+      <h3>Session Notes (Clears on Tab Close):</h3>
+      <ul id="sessionNotes"></ul>
+      <h3>Local Notes (Persistent):</h3>
+      <ul id="localNotes"></ul>
+      <button onclick="clearNotes()">Clear All Notes</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Omar Faruq | Storage Demo Project</p>
+  </footer>
+
+  <script>
+  
+    let sessionCount = sessionStorage.getItem('sessionCount') || 0;
+    sessionCount++;
+    sessionStorage.setItem('sessionCount', sessionCount);
+    document.getElementById('sessionCount').innerText = sessionCount;
+
+    
+    let localCount = localStorage.getItem('localCount') || 0;
+    localCount++;
+    localStorage.setItem('localCount', localCount);
+    document.getElementById('localCount').innerText = localCount;
+
+    function resetSession() {
+      sessionStorage.setItem('sessionCount', 0);
+      document.getElementById('sessionCount').innerText = 0;
+    }
+
+    function resetLocal() {
+      localStorage.setItem('localCount', 0);
+      document.getElementById('localCount').innerText = 0;
+    }
+
+ 
+    const noteInput = document.getElementById('noteInput');
+    const sessionNotesEl = document.getElementById('sessionNotes');
+    const localNotesEl = document.getElementById('localNotes');
+
+    function renderNotes() {
+      const sessionNotes = JSON.parse(sessionStorage.getItem('sessionNotes') || '[]');
+      const localNotes = JSON.parse(localStorage.getItem('localNotes') || '[]');
+
+      sessionNotesEl.innerHTML = sessionNotes.map(n => `<li>${n}</li>`).join('');
+      localNotesEl.innerHTML = localNotes.map(n => `<li>${n}</li>`).join('');
+    }
+
+    function addNote() {
+      const note = noteInput.value.trim();
+      if(!note) return alert('Enter a note!');
+
+      let sessionNotes = JSON.parse(sessionStorage.getItem('sessionNotes') || '[]');
+      let localNotes = JSON.parse(localStorage.getItem('localNotes') || '[]');
+
+      sessionNotes.push(note);
+      localNotes.push(note);
+
+      sessionStorage.setItem('sessionNotes', JSON.stringify(sessionNotes));
+      localStorage.setItem('localNotes', JSON.stringify(localNotes));
+
+      noteInput.value = '';
+      renderNotes();
+    }
+
+    function clearNotes() {
+      sessionStorage.removeItem('sessionNotes');
+      localStorage.removeItem('localNotes');
+      renderNotes();
+    }
+
+    renderNotes();
+  </script>
+</body>
+</html>
