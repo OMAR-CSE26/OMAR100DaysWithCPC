@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Omar Faruq | JSON Converter</title>
+  <meta name="description" content="Learn and interact with JSON.stringify() and JSON.parse() — project by Omar Faruq.">
+  <style>
+    :root {
+      --bg: #f3f6fb;
+      --accent: #1976d2;
+      --text: #1e293b;
+      --card: #fff;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--accent);
+      color: white;
+      text-align: center;
+      width: 100%;
+      padding: 25px;
+      box-shadow: var(--shadow);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+
+    header p {
+      font-size: 1rem;
+    }
+
+    main {
+      width: 90%;
+      max-width: 900px;
+      margin: 40px auto;
+      display: grid;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 0.95rem;
+      resize: vertical;
+    }
+
+    button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #0d5ab6;
+    }
+
+    .output {
+      background: #f9fafb;
+      border: 1px dashed #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 10px;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      margin-top: auto;
+    }
+
+    @media(max-width: 600px) {
+      header h1 { font-size: 1.5rem; }
+      textarea { font-size: 0.85rem; }
+      button { font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Omar Faruq | JSON Converter</h1>
+    <p>Learn how to use JSON.stringify() and JSON.parse() interactively</p>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>Convert JavaScript Object → JSON String</h2>
+      <p>Enter a JavaScript object below:</p>
+      <textarea id="jsObjectInput">{ "name": "Omar Faruq", "age": 22, "skills": ["HTML", "CSS", "JS"] }</textarea>
+      <button onclick="convertToJSON()">Convert to JSON</button>
+      <div class="output" id="jsonOutput"></div>
+    </div>
+
+    <div class="card">
+      <h2>Convert JSON String → JavaScript Object</h2>
+      <p>Enter a JSON string below:</p>
+      <textarea id="jsonInput">{ "university": "Dhaka International University", "department": "CSE", "year": 2025 }</textarea>
+      <button onclick="convertToObject()">Convert to Object</button>
+      <div class="output" id="objectOutput"></div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Omar Faruq | JSON Conversion Practice Project
+  </footer>
+
+  <script>
+    function convertToJSON() {
+      try {
+        let obj = JSON.parse(document.getElementById("jsObjectInput").value);
+        let jsonStr = JSON.stringify(obj, null, 2);
+        document.getElementById("jsonOutput").innerText = jsonStr;
+      } catch (err) {
+        document.getElementById("jsonOutput").innerText = "⚠️ Invalid JavaScript object format!";
+      }
+    }
+
+    function convertToObject() {
+      try {
+        let json = document.getElementById("jsonInput").value;
+        let obj = JSON.parse(json);
+        let formatted = JSON.stringify(obj, null, 2);
+        document.getElementById("objectOutput").innerText = formatted;
+      } catch (err) {
+        document.getElementById("objectOutput").innerText = "⚠️ Invalid JSON format!";
+      }
+    }
+  </script>
+
+</body>
+</html>
