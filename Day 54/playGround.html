@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Playground | Omar Faruq</title>
+  <meta name="description" content="Interactive visualization of JavaScript Promises - by Omar Faruq.">
+  <style>
+    :root {
+      --bg-dark: #0d1117;
+      --card: #161b22;
+      --accent: #3b82f6;
+      --success: #22c55e;
+      --error: #ef4444;
+      --text: #e2e8f0;
+      --light: #cbd5e1;
+    }
+
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      border-bottom: 1px solid #1f2937;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--light);
+    }
+
+    main {
+      width: 95%;
+      max-width: 900px;
+      margin: 40px auto;
+      background: var(--card);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+    }
+
+    .btns {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+    }
+
+    button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: #2563eb;
+      transform: scale(1.05);
+    }
+
+    .output {
+      background: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 10px;
+      padding: 20px;
+      font-family: monospace;
+      font-size: 0.95rem;
+      color: var(--light);
+      min-height: 200px;
+      white-space: pre-wrap;
+      overflow-y: auto;
+    }
+
+    .log {
+      margin: 5px 0;
+      padding: 6px 10px;
+      border-radius: 8px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .pending { background: #374151; color: #d1d5db; }
+    .success { background: #064e3b; color: #22c55e; }
+    .error { background: #7f1d1d; color: #f87171; }
+    .finally { background: #1e3a8a; color: #93c5fd; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      text-align: center;
+      color: #9ca3af;
+      margin-top: auto;
+      padding: 30px 0;
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.8rem; }
+      button { font-size: 0.9rem; padding: 10px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Promise Playground</h1>
+    <p>Visualize async JavaScript Promises — Created by <strong>Omar Faruq</strong></p>
+  </header>
+
+  <main>
+    <div class="btns">
+      <button onclick="runPromise('resolve')">Run Successful Promise</button>
+      <button onclick="runPromise('reject')">Run Failed Promise</button>
+      <button onclick="clearOutput()">Clear Console</button>
+    </div>
+
+    <div class="output" id="output">
+      <p>Click a button to start Promise simulation...</p>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Omar Faruq | Promise Deep Dive Project
+  </footer>
+
+  <script>
+    const output = document.getElementById("output");
+
+    function logMessage(message, type) {
+      const div = document.createElement("div");
+      div.classList.add("log", type);
+      div.textContent = message;
+      output.appendChild(div);
+      output.scrollTop = output.scrollHeight;
+    }
+
+    function runPromise(type) {
+      output.innerHTML = ""; 
+      logMessage("Creating Promise...", "pending");
+
+      const promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (type === "resolve") {
+            resolve("✅ Data fetched successfully!");
+          } else {
+            reject("❌ Network request failed!");
+          }
+        }, 2000);
+      });
+
+      logMessage("Promise is pending...", "pending");
+
+      promise
+        .then((res) => {
+          logMessage("Promise resolved: " + res, "success");
+        })
+        .catch((err) => {
+          logMessage("Promise rejected: " + err, "error");
+        })
+        .finally(() => {
+          logMessage("Promise settled (finally called)", "finally");
+        });
+    }
+
+    function clearOutput() {
+      output.innerHTML = "<p>Console cleared.</p>";
+    }
+  </script>
+
+</body>
+</html>
