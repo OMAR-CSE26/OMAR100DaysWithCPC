@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omar Faruq’s Smart DOM Playground</title>
+  <style>
+    :root {
+      --bg-dark: #0d1117;
+      --card: #161b22;
+      --text: #e2e8f0;
+      --accent: #3b82f6;
+      --light-bg: #f3f4f6;
+      --light-card: #fff;
+      --light-text: #111;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: var(--bg-dark);
+      color: var(--text);
+      transition: background 0.5s, color 0.5s;
+    }
+
+    header {
+      text-align: center;
+      padding: 25px;
+      background: var(--card);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+    }
+
+    header h1 {
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 40px;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 12px rgba(59,130,246,0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    button, input[type=color], input[type=number], textarea {
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      width: 100%;
+      font-size: 1rem;
+    }
+
+    button {
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: #2563eb;
+    }
+
+    .light {
+      background: var(--light-bg);
+      color: var(--light-text);
+    }
+
+    .light .card {
+      background: var(--light-card);
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: var(--card);
+      color: var(--text);
+    }
+
+    #emoji {
+      font-size: 2.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Omar Faruq’s Smart DOM Playground</h1>
+    <p>Explore live DOM manipulation with fun mini-tools ⚙️</p>
+    <button id="themeToggle">Toggle Theme 🌗</button>
+  </header>
+
+  <main>
+
+ 
+    <div class="card">
+      <h2>🎨 Color Picker</h2>
+      <input type="color" id="colorPicker">
+      <p id="colorDisplay">Selected Color: #ffffff</p>
+      <button onclick="applyBackground()">Apply Background</button>
+    </div>
+
+  
+    <div class="card">
+      <h2>🔢 Counter</h2>
+      <h3 id="count">0</h3>
+      <button onclick="increment()">Increase</button>
+      <button onclick="decrement()">Decrease</button>
+      <button onclick="reset()">Reset</button>
+    </div>
+
+
+    <div class="card">
+      <h2>✍️ Text Size & Color Editor</h2>
+      <textarea id="textInput" rows="3" placeholder="Type something here..."></textarea>
+      <input type="color" id="textColor">
+      <input type="number" id="textSize" placeholder="Font size (px)">
+      <button onclick="applyTextStyle()">Apply Style</button>
+      <p id="styledText">Preview your text here.</p>
+    </div>
+
+  
+    <div class="card">
+      <h2>😄 Random Emoji Generator</h2>
+      <p id="emoji">😀</p>
+      <button onclick="generateEmoji()">Generate Emoji</button>
+    </div>
+
+    
+    <div class="card">
+      <h2>💬 Character Counter</h2>
+      <textarea id="charInput" rows="3" placeholder="Type text..."></textarea>
+      <p>Characters: <span id="charCount">0</span></p>
+    </div>
+
+  </main>
+
+  <footer>
+    © 2025 Smart DOM Playground by <strong>Omar Faruq</strong>
+  </footer>
+
+  <script>
+  
+    const themeBtn = document.getElementById("themeToggle");
+    themeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+    });
+
+    
+    const colorPicker = document.getElementById("colorPicker");
+    const colorDisplay = document.getElementById("colorDisplay");
+
+    colorPicker.addEventListener("input", () => {
+      colorDisplay.textContent = `Selected Color: ${colorPicker.value}`;
+    });
+
+    function applyBackground() {
+      document.body.style.background = colorPicker.value;
+    }
+
+ 
+    let count = 0;
+    const countDisplay = document.getElementById("count");
+    function increment() {
+      count++;
+      countDisplay.textContent = count;
+    }
+    function decrement() {
+      count--;
+      countDisplay.textContent = count;
+    }
+    function reset() {
+      count = 0;
+      countDisplay.textContent = count;
+    }
+
+    
+    function applyTextStyle() {
+      const color = document.getElementById("textColor").value;
+      const size = document.getElementById("textSize").value;
+      const text = document.getElementById("textInput").value;
+      const styledText = document.getElementById("styledText");
+      styledText.style.color = color;
+      styledText.style.fontSize = size + "px";
+      styledText.textContent = text || "Preview your text here.";
+    }
+
+ 
+    const emojis = ["😀","😎","🎉","🤖","🚀","❤️","🔥","🌈","🐱‍💻","🧠","✨","🍀"];
+    function generateEmoji() {
+      const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+      document.getElementById("emoji").textContent = randomEmoji;
+    }
+
+ 
+    const charInput = document.getElementById("charInput");
+    const charCount = document.getElementById("charCount");
+
+    charInput.addEventListener("input", () => {
+      charCount.textContent = charInput.value.length;
+    });
+  </script>
+</body>
+</html>
