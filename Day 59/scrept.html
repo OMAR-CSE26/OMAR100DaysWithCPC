@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Omar Faruq | Auto-Save Form System</title>
+<style>
+  :root{
+    --primary:#2563eb;
+    --accent:#16a34a;
+    --danger:#dc2626;
+    --bg-dark:#0f172a;
+    --bg-light:#f9fafb;
+    --text-dark:#1e293b;
+    --text-light:#f1f5f9;
+  }
+  body{
+    font-family:Poppins,Arial,sans-serif;
+    margin:0;
+    display:flex;justify-content:center;align-items:center;
+    min-height:100vh;
+    background:var(--bg-dark);
+    color:var(--text-light);
+    transition:.4s;
+  }
+  .container{
+    background:#1e293b;
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 6px 20px rgba(0,0,0,.3);
+    width:90%;
+    max-width:500px;
+  }
+  h1{text-align:center;color:var(--primary);margin-bottom:20px}
+  label{display:block;margin:10px 0 5px;font-weight:600}
+  input,textarea{
+    width:100%;padding:10px;border:none;border-radius:8px;
+    font-size:1rem;outline:none;
+  }
+  textarea{resize:none;height:90px}
+  .btn-row{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+  button{
+    flex:1;padding:12px;border:none;border-radius:8px;font-size:1rem;
+    cursor:pointer;color:white;font-weight:600;transition:.3s;
+  }
+  .save{background:var(--accent)}
+  .clear{background:var(--danger)}
+  button:hover{opacity:.85;transform:scale(1.03)}
+  .status{
+    margin-top:15px;text-align:center;
+    font-size:.95rem;opacity:.8;
+  }
+  .theme-toggle{
+    position:fixed;top:15px;right:15px;
+    background:var(--primary);color:white;
+    padding:10px;border-radius:50%;cursor:pointer;font-size:1.3rem;
+    border:none;
+  }
+  .light-mode{
+    background:var(--bg-light);
+    color:var(--text-dark);
+  }
+  .light-mode .container{background:white;color:#111}
+  .light-mode .theme-toggle{background:var(--danger)}
+  @media(max-width:600px){
+    .container{padding:20px}
+    button{font-size:.9rem}
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle">🌙</button>
+
+<div class="container">
+  <h1>Omar Faruq – Auto Save Form</h1>
+  <form id="userForm">
+    <label>Name</label>
+    <input type="text" id="name" placeholder="Enter your name" />
+
+    <label>Email</label>
+    <input type="email" id="email" placeholder="Enter your email" />
+
+    <label>Feedback</label>
+    <textarea id="feedback" placeholder="Write your feedback..."></textarea>
+
+    <div class="btn-row">
+      <button type="button" class="save" id="saveBtn">💾 Save Now</button>
+      <button type="button" class="clear" id="clearBtn">🗑️ Clear Data</button>
+    </div>
+  </form>
+  <div class="status" id="status">Status: Waiting for input…</div>
+</div>
+
+<script>
+  const nameInput=document.getElementById('name');
+  const emailInput=document.getElementById('email');
+  const feedbackInput=document.getElementById('feedback');
+  const status=document.getElementById('status');
+  const saveBtn=document.getElementById('saveBtn');
+  const clearBtn=document.getElementById('clearBtn');
+  const themeToggle=document.getElementById('themeToggle');
+  const inputs=[nameInput,emailInput,feedbackInput];
+
+ 
+  window.addEventListener('DOMContentLoaded',()=>{
+    const saved=JSON.parse(localStorage.getItem('autoForm'))||{};
+    if(saved.name)nameInput.value=saved.name;
+    if(saved.email)emailInput.value=saved.email;
+    if(saved.feedback)feedbackInput.value=saved.feedback;
+    if(Object.keys(saved).length>0)status.textContent='✅ Auto-saved data loaded.';
+  });
+
+
+  inputs.forEach(inp=>{
+    inp.addEventListener('input',()=>{
+      status.textContent='💾 Auto-saving...';
+      clearTimeout(window.saveTimeout);
+      window.saveTimeout=setTimeout(()=>{
+        saveData();
+      },1000);
+    });
+  });
+
+  function saveData(){
+    const data={
+      name:nameInput.value,
+      email:emailInput.value,
+      feedback:feedbackInput.value,
+      timestamp:new Date().toLocaleTimeString()
+    };
+    localStorage.setItem('autoForm',JSON.stringify(data));
+    status.textContent='✅ Saved at '+data.timestamp;
+  }
+
+  saveBtn.addEventListener('click',saveData);
+
+  clearBtn.addEventListener('click',()=>{
+    localStorage.removeItem('autoForm');
+    nameInput.value=emailInput.value=feedbackInput.value='';
+    status.textContent='🗑️ Cleared all data.';
+  });
+
+
+  themeToggle.addEventListener('click',()=>{
+    document.body.classList.toggle('light-mode');
+    themeToggle.textContent=document.body.classList.contains('light-mode')?'🌞':'🌙';
+  });
+</script>
+</body>
+</html>
