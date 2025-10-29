@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omar Faruq | Smart Notes App</title>
+<style>
+  :root {
+    --bg-dark: #0f172a;
+    --bg-light: #f8fafc;
+    --primary: #2563eb;
+    --accent: #16a34a;
+    --danger: #dc2626;
+    --text-dark: #1e293b;
+    --text-light: #f1f5f9;
+  }
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+    transition: 0.4s;
+  }
+  header {
+    background: var(--primary);
+    padding: 15px;
+    text-align: center;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  .theme-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .theme-toggle:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+  .container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+  }
+  .note-input {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    resize: none;
+    font-size: 1rem;
+    outline: none;
+  }
+  .btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+  }
+  .btn:hover {
+    background: var(--accent);
+  }
+  .notes-list {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .note {
+    background: #1e293b;
+    padding: 15px;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: 0.3s;
+  }
+  .note:hover {
+    transform: scale(1.03);
+  }
+  .note h3 {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  .note p {
+    font-size: 0.95rem;
+    margin: 10px 0 0;
+  }
+  .note .delete {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--danger);
+    border: none;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+  .search-box {
+    margin: 15px 0;
+    width: 100%;
+  }
+  .search-box input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    outline: none;
+  }
+  .light-mode {
+    background: var(--bg-light);
+    color: var(--text-dark);
+  }
+  .light-mode header {
+    background: var(--accent);
+  }
+  .light-mode .note {
+    background: white;
+    color: var(--text-dark);
+  }
+</style>
+</head>
+<body>
+  <header>📝 Omar Faruq - Smart Notes App</header>
+  <button class="theme-toggle" id="themeToggle">🌙</button>
+  
+  <div class="container">
+    <div class="note-input">
+      <textarea id="noteText" placeholder="Write your note..."></textarea>
+      <button class="btn" id="addNoteBtn">Add Note</button>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="🔍 Search notes...">
+      </div>
+    </div>
+    <div class="notes-list" id="notesList"></div>
+  </div>
+
+<script>
+  const noteText = document.getElementById('noteText');
+  const addNoteBtn = document.getElementById('addNoteBtn');
+  const notesList = document.getElementById('notesList');
+  const searchInput = document.getElementById('searchInput');
+  const themeToggle = document.getElementById('themeToggle');
+
+
+  function loadNotes() {
+    const notes = JSON.parse(localStorage.getItem('notesApp')) || [];
+    notesList.innerHTML = '';
+    notes.forEach((note, index) => {
+      const noteEl = document.createElement('div');
+      noteEl.classList.add('note');
+      noteEl.innerHTML = `
+        <button class="delete" onclick="deleteNote(${index})">❌</button>
+        <h3>Note ${index + 1}</h3>
+        <p>${note}</p>
+      `;
+      notesList.appendChild(noteEl);
+    });
+  }
+
+  
+  addNoteBtn.addEventListener('click', () => {
+    const text = noteText.value.trim();
+    if (text === '') return;
+    const notes = JSON.parse(localStorage.getItem('notesApp')) || [];
+    notes.push(text);
+    localStorage.setItem('notesApp', JSON.stringify(notes));
+    noteText.value = '';
+    loadNotes();
+  });
+
+
+  function deleteNote(index) {
+    const notes = JSON.parse(localStorage.getItem('notesApp')) || [];
+    notes.splice(index, 1);
+    localStorage.setItem('notesApp', JSON.stringify(notes));
+    loadNotes();
+  }
+
+
+  searchInput.addEventListener('input', (e) => {
+    const searchValue = e.target.value.toLowerCase();
+    const notes = document.querySelectorAll('.note');
+    notes.forEach(note => {
+      const text = note.textContent.toLowerCase();
+      note.style.display = text.includes(searchValue) ? 'block' : 'none';
+    });
+  });
+
+
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+    themeToggle.textContent = document.body.classList.contains('light-mode') ? '🌞' : '🌙';
+  });
+
+ 
+  window.onload = loadNotes;
+</script>
+</body>
+</html>
