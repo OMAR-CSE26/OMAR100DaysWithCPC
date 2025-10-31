@@ -1,25 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Omar Faruq | </title>
-<style>
+import { useState } from 'react';
+import './App.css';
+
+function App() {
+  const [count, setCount] = useState(0);
 
   return (
     <div className="app">
       <header className="header">
         <h1>🚀 Welcome to Omar Faruq’s React App</h1>
-        <p> React Setup using Vite ⚡</p>
+        <p>React Setup using Vite ⚡</p>
       </header>
 
       <main>
         <h2>Interactive Counter</h2>
         <p>Count: {count}</p>
-        
-        <button onClick={() => setCount(count + 1)}>Increment ➕</button>
-        <button onClick={() => setCount(count - 1)}>Decrement ➖</button>
-        <button onClick={() => setCount(0)}>Reset 🔁</button>
+
+        <div className="buttons">
+          <button onClick={() => setCount(count + 1)}>Increment ➕</button>
+          <button onClick={() => setCount(count - 1)}>Decrement ➖</button>
+          <button onClick={() => setCount(0)}>Reset 🔁</button>
+        </div>
       </main>
 
       <footer>
@@ -27,43 +27,6 @@
       </footer>
     </div>
   );
-
-.app {
-  text-align: center;
-  background: linear-gradient(to right, #2563eb, #3b82f6);
-  color: white;
-  min-height: 100vh;
-  padding: 30px;
-  font-family: 'Poppins', sans-serif;
 }
 
-.header {
-  margin-bottom: 40px;
-}
-
-button {
-  background: white;
-  color: #2563eb;
-  border: none;
-  padding: 10px 15px;
-  margin: 10px;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: scale(1.05);
-  background: #f0f9ff;
-}
-
-footer {
-  margin-top: 50px;
-  font-size: 0.9rem;
-  opacity: 0.8;
-}
-
-</style>
-</head>
-<body>
+export default App;
